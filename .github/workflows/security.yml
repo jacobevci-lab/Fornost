@@ -32,6 +32,23 @@ jobs:
           queries: security-extended
       - name: Analyze
         uses: github/codeql-action/analyze@v4
+        with:
+          output: ../results
+      - name: Summarize CodeQL SARIF findings
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          SARIF="../results/javascript.sarif"
+          if [[ ! -f "$SARIF" ]]; then
+            echo "CodeQL SARIF file was not produced."
+            exit 1
+          fi
+          COUNT=$(jq '[.runs[].results[]?] | length' "$SARIF")
+          echo "CodeQL SARIF finding count: $COUNT"
+          if [[ "$COUNT" -gt 0 ]]; then
+            jq -r '.runs[].results[]? | "- [\(.level // "unknown")] \(.ruleId): \(.message.text)"' "$SARIF"
+          fi
 
   sca:
     name: SCA / npm audit
