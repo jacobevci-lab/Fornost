@@ -1,0 +1,80 @@
+:root{
+  --ink:#061412;
+  --ink2:#081a17;
+  --ink3:#0d2420;
+  --green:#49d6b7;
+  --orange:#f47b20;
+  --orange2:#ff9b46;
+}
+
+.site-header{
+  background:rgba(5,20,18,.94);
+  border-bottom-color:rgba(80,220,190,.10);
+}
+
+.hero-dark{
+  background:
+    radial-gradient(circle at 78% 10%,rgba(244,123,32,.12),transparent 31%),
+    radial-gradient(circle at 9% 78%,rgba(36,197,166,.15),transparent 34%),
+    linear-gradient(135deg,#061412 0%,#071b18 48%,#06110f 100%);
+}
+
+.section-contact{background:#071613}
+.site-footer{background:#04100e;border-top-color:rgba(80,220,190,.10)}
+.floating-top{background:#09201c;border-color:rgba(73,214,183,.35);color:#62e0c3}
+
+.brand{
+  gap:0;
+  min-width:188px;
+}
+.brand-logo{
+  display:block;
+  width:190px;
+  height:auto;
+  max-height:58px;
+}
+.footer-brand .brand-logo{
+  width:178px;
+}
+
+.brand-slogan{
+  margin:14px 0 0;
+  color:#dbe7e4;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.19em;
+}
+.brand-slogan i{
+  color:var(--orange);
+  font-style:normal;
+  padding:0 7px;
+}
+.brand-promise{
+  margin:7px 0 0;
+  color:#6f8881;
+  font-size:8px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+
+.nav-contact{
+  border-color:rgba(73,214,183,.34);
+  color:#baf7e8!important;
+  background:rgba(73,214,183,.07);
+}
+.nav-contact:hover{
+  border-color:rgba(73,214,183,.60);
+}
+
+.map-head i{
+  background:#49d6b7;
+  box-shadow:0 0 12px rgba(73,214,183,.75);
+}
+
+@media (max-width:760px){
+  .brand{min-width:154px}
+  .brand-logo{width:158px}
+  .footer-brand .brand-logo{width:166px}
+  .brand-slogan{font-size:8px;letter-spacing:.14em}
+  .brand-promise{font-size:7px;letter-spacing:.16em}
+}
