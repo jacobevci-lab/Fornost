@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fornostsecurity.com/sitemap.xml
