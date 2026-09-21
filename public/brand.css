@@ -37,6 +37,7 @@
   display:block;
   width:236px;
   height:auto;
+  aspect-ratio:460/108;
   max-height:64px;
   object-fit:contain;
   object-position:left center;
