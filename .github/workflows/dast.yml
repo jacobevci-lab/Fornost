@@ -24,16 +24,30 @@ jobs:
         run: |
           set -euo pipefail
           APEX="https://fornostsecurity.com/"
+          STATIC_ASSET="https://fornostsecurity.com/styles.css"
 
-          # Cloudflare deployment can race the GitHub push. Wait until the new HSTS policy is live.
-          for attempt in $(seq 1 12); do
+          # A push can start this workflow before Cloudflare finishes deploying it.
+          # Wait for policy markers introduced by the current security baseline so
+          # ZAP scans the new deployment instead of the previous one.
+          for attempt in $(seq 1 18); do
             HEADERS=$(curl --fail --silent --show-error --head --retry 2 --retry-delay 3 --max-time 20 "$APEX" || true)
-            if grep -Eqi '^strict-transport-security:[[:space:]]*max-age=31536000' <<<"$HEADERS"; then
-              echo "HSTS is live on attempt $attempt."
+            ASSET_HEADERS=$(curl --fail --silent --show-error --head --retry 2 --retry-delay 3 --max-time 20 "$STATIC_ASSET" || true)
+            HSTS_OK=false
+            COEP_OK=false
+            CACHE_OK=false
+            grep -Eqi '^strict-transport-security:[[:space:]]*max-age=31536000' <<<"$HEADERS" && HSTS_OK=true
+            grep -Eqi '^cross-origin-embedder-policy:[[:space:]]*require-corp' <<<"$HEADERS" && COEP_OK=true
+            grep -Eqi '^cache-control:.*max-age=3600' <<<"$ASSET_HEADERS" && CACHE_OK=true
+            if [[ "$HSTS_OK" == true && "$COEP_OK" == true && "$CACHE_OK" == true ]]; then
+              echo "Current production security policy is live on attempt $attempt."
               break
             fi
-            if [[ "$attempt" -eq 12 ]]; then
-              echo "Expected HSTS header was not observed after waiting for deployment."
+            if [[ "$attempt" -eq 18 ]]; then
+              echo "Expected production security headers were not observed after waiting for deployment."
+              echo "--- apex headers ---"
+              printf '%s\n' "$HEADERS"
+              echo "--- styles.css headers ---"
+              printf '%s\n' "$ASSET_HEADERS"
               exit 1
             fi
             sleep 10
@@ -43,6 +57,8 @@ jobs:
           grep -Eqi '^x-content-type-options:[[:space:]]*nosniff' <<<"$HEADERS"
           grep -Eqi '^x-frame-options:[[:space:]]*DENY' <<<"$HEADERS"
           grep -Eqi '^permissions-policy:' <<<"$HEADERS"
+          grep -Eqi '^cross-origin-opener-policy:[[:space:]]*same-origin' <<<"$HEADERS"
+          grep -Eqi '^cross-origin-resource-policy:[[:space:]]*same-origin' <<<"$HEADERS"
 
           HTTP_STATUS=$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' http://fornostsecurity.com/)
           HTTP_LOCATION=$(curl --silent --show-error --head http://fornostsecurity.com/ | awk 'BEGIN{IGNORECASE=1} /^location:/{gsub("\r",""); print $2; exit}')
@@ -82,26 +98,34 @@ jobs:
           artifact_name: "zap-baseline-report"
           cmd_options: '-a -m 2'
 
-      - name: Summarize ZAP alerts
+      - name: Summarize and gate ZAP alerts
         if: always()
         shell: bash
         run: |
           set -euo pipefail
           if [[ ! -f report_json.json ]]; then
             echo "ZAP JSON report not found; inspect the ZAP step and artifact."
-            exit 0
+            exit 1
           fi
           python3 - <<'PY'
           import json
           from collections import Counter
+
           with open('report_json.json', encoding='utf-8') as f:
               report = json.load(f)
+
           alerts = []
           for site in report.get('site', []):
               alerts.extend(site.get('alerts', []))
+
           risks = Counter(a.get('riskdesc', 'Unknown').split(' ')[0] for a in alerts)
           print(f'ZAP alert groups: {len(alerts)}')
           print('Risk summary:', dict(risks))
           for a in alerts:
               print(f"- [{a.get('riskdesc','Unknown')}] {a.get('name','Unnamed alert')} (plugin {a.get('pluginid','?')})")
+
+          blocking = risks.get('High', 0) + risks.get('Medium', 0)
+          if blocking:
+              raise SystemExit(f'Blocking DAST gate: {blocking} High/Medium alert group(s) detected.')
+          print('DAST gate passed: no High or Medium alert groups detected.')
           PY
