@@ -124,8 +124,8 @@ jobs:
           for a in alerts:
               print(f"- [{a.get('riskdesc','Unknown')}] {a.get('name','Unnamed alert')} (plugin {a.get('pluginid','?')})")
 
-          blocking = risks.get('High', 0) + risks.get('Medium', 0)
+          blocking = risks.get('High', 0) + risks.get('Medium', 0) + risks.get('Low', 0)
           if blocking:
-              raise SystemExit(f'Blocking DAST gate: {blocking} High/Medium alert group(s) detected.')
-          print('DAST gate passed: no High or Medium alert groups detected.')
+              raise SystemExit(f'Blocking DAST gate: {blocking} Low/Medium/High alert group(s) detected.')
+          print('DAST gate passed: no Low, Medium or High alert groups detected.')
           PY
