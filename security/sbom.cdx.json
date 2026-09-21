@@ -1,0 +1,52 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:7fc2fd91-26f7-4a35-85cc-32a9d44f7d01",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-21T12:00:00Z",
+    "component": {
+      "type": "application",
+      "bom-ref": "fornost-security-site@1.0.0",
+      "name": "Fornost Security Website",
+      "version": "1.0.0",
+      "description": "Bilingual static enterprise cybersecurity advisory website deployed with Cloudflare Workers Static Assets.",
+      "externalReferences": [
+        {"type": "website", "url": "https://fornostsecurity.com"},
+        {"type": "vcs", "url": "https://github.com/jacobevci-lab/Fornost"}
+      ],
+      "properties": [
+        {"name": "fornost:runtime-dependency-count", "value": "0"},
+        {"name": "fornost:hosting", "value": "Cloudflare Workers Static Assets"}
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "application",
+      "bom-ref": "pkg:npm/wrangler@4.135.0",
+      "name": "wrangler",
+      "version": "4.135.0",
+      "purl": "pkg:npm/wrangler@4.135.0",
+      "scope": "excluded",
+      "licenses": [
+        {"expression": "MIT OR Apache-2.0"}
+      ],
+      "properties": [
+        {"name": "fornost:usage", "value": "build-and-deployment-tool-only"},
+        {"name": "fornost:runtime-shipped", "value": "false"}
+      ]
+    }
+  ],
+  "services": [
+    {
+      "bom-ref": "service:cloudflare-workers-static-assets",
+      "name": "Cloudflare Workers Static Assets",
+      "provider": {"name": "Cloudflare"},
+      "endpoints": ["https://fornostsecurity.com"]
+    }
+  ],
+  "dependencies": [
+    {"ref": "fornost-security-site@1.0.0", "dependsOn": []}
+  ]
+}

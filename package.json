@@ -1,0 +1,16 @@
+{
+  "name": "fornost-security-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fornost Security enterprise cybersecurity advisory website",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "preview": "wrangler versions upload"
+  },
+  "devDependencies": {
+    "wrangler": "4.135.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
