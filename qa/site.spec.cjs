@@ -1,5 +1,4 @@
 const { test, expect } = require('@playwright/test');
-const path = require('node:path');
 
 const axePath = require.resolve('axe-core/axe.min.js');
 
@@ -54,6 +53,11 @@ test('structural, SEO, translation and asset integrity', async ({ page }) => {
       ...[...document.querySelectorAll('link[rel="stylesheet"][href]')].map((el) => el.href),
       ...[...document.querySelectorAll('img[src]')].map((el) => el.src)
     ];
+    const rawResources = [
+      ...[...document.querySelectorAll('script[src]')].map((el) => el.getAttribute('src')),
+      ...[...document.querySelectorAll('link[rel="stylesheet"][href]')].map((el) => el.getAttribute('href')),
+      ...[...document.querySelectorAll('img[src]')].map((el) => el.getAttribute('src'))
+    ].filter(Boolean);
     const externalResources = resources.filter((url) => new URL(url, location.href).origin !== location.origin);
 
     return {
@@ -74,7 +78,7 @@ test('structural, SEO, translation and asset integrity', async ({ page }) => {
       lang: document.documentElement.lang,
       horizontalOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
       inlineScripts: [...document.scripts].filter((script) => !script.src && script.textContent.trim()).length,
-      insecureResources: resources.filter((url) => url.startsWith('http://')),
+      insecureResources: rawResources.filter((url) => url.trim().startsWith('http://')),
       title: document.title
     };
   });
@@ -108,8 +112,9 @@ test('structural, SEO, translation and asset integrity', async ({ page }) => {
 });
 
 test('English and Turkish switching is complete and persists', async ({ page }) => {
-  await page.addInitScript(() => localStorage.removeItem('fornost-language'));
   await gotoHome(page);
+  await page.evaluate(() => localStorage.removeItem('fornost-language'));
+  await page.reload({ waitUntil: 'networkidle' });
 
   await page.locator('[data-set-lang="tr"]').click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'tr');
