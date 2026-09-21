@@ -25,7 +25,7 @@ jobs:
           node-version: "22"
 
       - name: Install pinned QA tooling without changing project manifests
-        run: npm install --no-save --package-lock=false @playwright/test@1.55.0 axe-core@4.10.2
+        run: npm install --no-save --package-lock=false @playwright/test@1.63.0 axe-core@4.13.0
 
       - name: Install Chromium runtime
         run: npx playwright install --with-deps chromium
