@@ -1,6 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 const axePath = require.resolve('axe-core/axe.min.js');
+const allowedPlatformResourceHosts = new Set(['static.cloudflareinsights.com']);
 
 async function gotoHome(page) {
   const response = await page.goto('/', { waitUntil: 'networkidle' });
@@ -22,7 +23,10 @@ async function collectRuntimeErrors(page) {
     if (response.status() >= 400) badResponses.push(`${response.status()} ${response.url()}`);
   });
   page.on('requestfailed', (request) => {
-    failedRequests.push(`${request.url()} :: ${request.failure()?.errorText || 'failed'}`);
+    const host = new URL(request.url()).hostname;
+    if (!allowedPlatformResourceHosts.has(host)) {
+      failedRequests.push(`${request.url()} :: ${request.failure()?.errorText || 'failed'}`);
+    }
   });
 
   return { consoleErrors, pageErrors, badResponses, failedRequests };
@@ -32,7 +36,8 @@ test('structural, SEO, translation and asset integrity', async ({ page }) => {
   const runtime = await collectRuntimeErrors(page);
   await gotoHome(page);
 
-  const result = await page.evaluate(() => {
+  const result = await page.evaluate((allowedHosts) => {
+    const allowed = new Set(allowedHosts);
     const ids = [...document.querySelectorAll('[id]')].map((el) => el.id);
     const duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
     const brokenAnchors = [...document.querySelectorAll('a[href^="#"]')]
@@ -58,14 +63,17 @@ test('structural, SEO, translation and asset integrity', async ({ page }) => {
       ...[...document.querySelectorAll('link[rel="stylesheet"][href]')].map((el) => el.getAttribute('href')),
       ...[...document.querySelectorAll('img[src]')].map((el) => el.getAttribute('src'))
     ].filter(Boolean);
-    const externalResources = resources.filter((url) => new URL(url, location.href).origin !== location.origin);
+    const unexpectedExternalResources = resources.filter((url) => {
+      const parsed = new URL(url, location.href);
+      return parsed.origin !== location.origin && !allowed.has(parsed.hostname);
+    });
 
     return {
       duplicateIds,
       brokenAnchors,
       incompleteTranslations,
       imagesWithoutAlt,
-      externalResources,
+      unexpectedExternalResources,
       h1Count: document.querySelectorAll('h1').length,
       formCount: document.querySelectorAll('form').length,
       mailtoLinks: [...document.querySelectorAll('a[href^="mailto:"]')].map((a) => a.getAttribute('href')),
@@ -81,13 +89,13 @@ test('structural, SEO, translation and asset integrity', async ({ page }) => {
       insecureResources: rawResources.filter((url) => url.trim().startsWith('http://')),
       title: document.title
     };
-  });
+  }, [...allowedPlatformResourceHosts]);
 
   expect(result.duplicateIds).toEqual([]);
   expect(result.brokenAnchors).toEqual([]);
   expect(result.incompleteTranslations).toEqual([]);
   expect(result.imagesWithoutAlt).toEqual([]);
-  expect(result.externalResources).toEqual([]);
+  expect(result.unexpectedExternalResources).toEqual([]);
   expect(result.insecureResources).toEqual([]);
   expect(result.inlineScripts).toBe(0);
   expect(result.h1Count).toBe(1);
@@ -158,7 +166,7 @@ test('navigation anchors and back-to-top behavior work', async ({ page }) => {
   await expect(page.locator('#contact')).toBeInViewport();
 });
 
-test('mobile navigation opens, closes and does not overflow', async ({ page }) => {
+test('mobile navigation supports pointer and keyboard closure without overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await gotoHome(page);
 
@@ -171,6 +179,12 @@ test('mobile navigation opens, closes and does not overflow', async ({ page }) =
   await expect(page.locator('#siteNav')).toHaveClass(/open/);
   await expect(page.locator('body')).toHaveClass(/menu-open/);
 
+  await page.keyboard.press('Escape');
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(toggle).toBeFocused();
+  await expect(page.locator('#siteNav')).not.toHaveClass(/open/);
+
+  await toggle.click();
   await page.locator('#siteNav a[href="#capabilities"]').click();
   await expect(toggle).toHaveAttribute('aria-expanded', 'false');
   await expect(page.locator('#siteNav')).not.toHaveClass(/open/);
@@ -206,28 +220,29 @@ test('responsive layout has no horizontal overflow across supported viewports', 
   }
 });
 
-test('WCAG A/AA automated accessibility scan has no violations', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await gotoHome(page);
+test('WCAG A/AA automated accessibility scan has no violations', async ({ browser }, testInfo) => {
+  const baseURL = testInfo.project.use.baseURL;
+  const context = await browser.newContext({ bypassCSP: true, viewport: { width: 1440, height: 900 } });
+  const page = await context.newPage();
+
+  const response = await page.goto(new URL('/', baseURL).toString(), { waitUntil: 'networkidle' });
+  expect(response?.status()).toBe(200);
   await page.addScriptTag({ path: axePath });
 
-  const desktop = await page.evaluate(async () => {
-    return axe.run(document, {
-      runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] }
-    });
-  });
-
+  const desktop = await page.evaluate(async () => axe.run(document, {
+    runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] }
+  }));
   expect(desktop.violations, JSON.stringify(desktop.violations, null, 2)).toEqual([]);
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload({ waitUntil: 'networkidle' });
   await page.addScriptTag({ path: axePath });
-  const mobile = await page.evaluate(async () => {
-    return axe.run(document, {
-      runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] }
-    });
-  });
+  const mobile = await page.evaluate(async () => axe.run(document, {
+    runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] }
+  }));
   expect(mobile.violations, JSON.stringify(mobile.violations, null, 2)).toEqual([]);
+
+  await context.close();
 });
 
 test('reduced-motion preference disables reveal animation dependency', async ({ page }) => {
