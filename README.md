@@ -34,3 +34,5 @@ wrangler.jsonc
 ```
 
 The site is fully static and uses email-only contact. No form backend is required.
+
+<!-- Cloudflare deployment trigger: 2026-09-21 -->
