@@ -14,17 +14,64 @@ jobs:
   zap-baseline:
     name: OWASP ZAP Baseline
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Verify production target is reachable
+      - name: Verify production edge, redirects and TLS policy
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --location --retry 6 --retry-delay 10 --max-time 20 \
-            --output /dev/null https://fornostsecurity.com/
+          APEX="https://fornostsecurity.com/"
+
+          # Cloudflare deployment can race the GitHub push. Wait until the new HSTS policy is live.
+          for attempt in $(seq 1 12); do
+            HEADERS=$(curl --fail --silent --show-error --head --retry 2 --retry-delay 3 --max-time 20 "$APEX" || true)
+            if grep -Eqi '^strict-transport-security:[[:space:]]*max-age=31536000' <<<"$HEADERS"; then
+              echo "HSTS is live on attempt $attempt."
+              break
+            fi
+            if [[ "$attempt" -eq 12 ]]; then
+              echo "Expected HSTS header was not observed after waiting for deployment."
+              exit 1
+            fi
+            sleep 10
+          done
+
+          grep -Eqi '^content-security-policy:' <<<"$HEADERS"
+          grep -Eqi '^x-content-type-options:[[:space:]]*nosniff' <<<"$HEADERS"
+          grep -Eqi '^x-frame-options:[[:space:]]*DENY' <<<"$HEADERS"
+          grep -Eqi '^permissions-policy:' <<<"$HEADERS"
+
+          HTTP_STATUS=$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' http://fornostsecurity.com/)
+          HTTP_LOCATION=$(curl --silent --show-error --head http://fornostsecurity.com/ | awk 'BEGIN{IGNORECASE=1} /^location:/{gsub("\r",""); print $2; exit}')
+          [[ "$HTTP_STATUS" =~ ^30[18]$ ]]
+          [[ "$HTTP_LOCATION" == https://fornostsecurity.com/* ]]
+
+          WWW_STATUS=$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' https://www.fornostsecurity.com/)
+          WWW_LOCATION=$(curl --silent --show-error --head https://www.fornostsecurity.com/ | awk 'BEGIN{IGNORECASE=1} /^location:/{gsub("\r",""); print $2; exit}')
+          [[ "$WWW_STATUS" =~ ^30[18]$ ]]
+          [[ "$WWW_LOCATION" == https://fornostsecurity.com/* ]]
+
+          FINAL_WWW=$(curl --silent --show-error --location --output /dev/null --write-out '%{url_effective}' http://www.fornostsecurity.com/)
+          [[ "$FINAL_WWW" == https://fornostsecurity.com/* ]]
+
+          curl --tlsv1.2 --tls-max 1.2 --fail --silent --show-error --output /dev/null "$APEX"
+          curl --tlsv1.3 --tls-max 1.3 --fail --silent --show-error --output /dev/null "$APEX"
+          if curl --tls-max 1.1 --connect-timeout 10 --fail --silent --show-error --output /dev/null "$APEX"; then
+            echo "Legacy TLS <=1.1 unexpectedly succeeded."
+            exit 1
+          else
+            echo "Legacy TLS <=1.1 correctly rejected."
+          fi
+
+          TRACE_STATUS=$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' -X TRACE "$APEX")
+          if [[ "$TRACE_STATUS" == "200" ]]; then
+            echo "TRACE unexpectedly returned 200."
+            exit 1
+          fi
+          echo "TRACE returned $TRACE_STATUS (accepted as rejected/non-success)."
 
       - name: OWASP ZAP passive baseline scan
         uses: zaproxy/action-baseline@de8ad967d3548d44ef623df22cf95c3b0baf8b25 # v0.15.0
