@@ -1,0 +1,74 @@
+name: Full QA
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-qa:
+    name: Browser / Responsive / Accessibility QA
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22"
+
+      - name: Install pinned QA tooling without changing project manifests
+        run: npm install --no-save --package-lock=false @playwright/test@1.55.0 axe-core@4.10.2
+
+      - name: Install Chromium runtime
+        run: npx playwright install --with-deps chromium
+
+      - name: Run full local browser QA
+        env:
+          QA_REPORT_DIR: qa-report-local
+        run: npx playwright test --config=qa/playwright.config.cjs
+
+      - name: Wait for current production deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://fornostsecurity.com/"
+          for attempt in $(seq 1 24); do
+            HTML=$(curl --fail --silent --show-error --max-time 20 "$URL" || true)
+            if grep -Fq 'A future where security enables transformation instead of slowing it down.' <<<"$HTML" \
+              && grep -Fq 'Security that connects' <<<"$HTML"; then
+              echo "Current enterprise redesign is live on attempt $attempt."
+              exit 0
+            fi
+            echo "Waiting for Cloudflare production deployment ($attempt/24)..."
+            sleep 10
+          done
+          echo "Expected production content was not observed within the deployment window."
+          exit 1
+
+      - name: Run full production browser smoke QA
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          QA_BASE_URL: https://fornostsecurity.com
+          QA_REPORT_DIR: qa-report-production
+        run: npx playwright test --config=qa/playwright.config.cjs
+
+      - name: Upload QA evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: full-qa-evidence
+          path: |
+            qa-report-local/
+            qa-report-production/
+            test-results/
+          if-no-files-found: warn
+          retention-days: 30
