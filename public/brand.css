@@ -23,6 +23,11 @@
 .site-footer{background:#04100e;border-top-color:rgba(80,220,190,.10)}
 .floating-top{background:#09201c;border-color:rgba(73,214,183,.35);color:#62e0c3}
 
+/* Contrast refinements for small text */
+.section-kicker:not(.light){color:#53606d}
+.map-axis span{color:#8d99a6}
+.footer-meta{color:#8995a2}
+
 .brand{
   gap:0;
   min-width:236px;
