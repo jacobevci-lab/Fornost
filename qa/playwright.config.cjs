@@ -1,3 +1,4 @@
+const path = require('node:path');
 const { defineConfig } = require('@playwright/test');
 
 const baseURL = process.env.QA_BASE_URL || 'http://127.0.0.1:8788';
@@ -25,6 +26,7 @@ module.exports = defineConfig({
   },
   webServer: externalTarget ? undefined : {
     command: 'python3 -m http.server 8788 --directory public',
+    cwd: path.resolve(__dirname, '..'),
     url: 'http://127.0.0.1:8788',
     reuseExistingServer: false,
     timeout: 15000
