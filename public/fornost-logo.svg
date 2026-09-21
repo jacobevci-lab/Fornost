@@ -1,40 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 108" role="img" aria-labelledby="title desc">
   <title id="title">Fornost Security</title>
-  <desc id="desc">Fornost Security logo in teal, green and orange.</desc>
+  <desc id="desc">Fornost Security enterprise logo with a folded teal and orange F symbol.</desc>
   <defs>
-    <linearGradient id="tealA" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b5e57"/>
-      <stop offset="0.55" stop-color="#17a996"/>
-      <stop offset="1" stop-color="#55e0c8"/>
+    <linearGradient id="tealTop" x1="0" y1="0" x2="1" y2="0.9">
+      <stop offset="0" stop-color="#0b635c"/>
+      <stop offset="0.52" stop-color="#18ae9b"/>
+      <stop offset="1" stop-color="#59e1ca"/>
     </linearGradient>
-    <linearGradient id="tealB" x1="0" y1="1" x2="1" y2="0">
-      <stop offset="0" stop-color="#063b38"/>
-      <stop offset="1" stop-color="#119f91"/>
+    <linearGradient id="tealMid" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#063d39"/>
+      <stop offset="0.56" stop-color="#0b7169"/>
+      <stop offset="1" stop-color="#2cc7b1"/>
     </linearGradient>
-    <linearGradient id="orangeA" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ffbd4a"/>
-      <stop offset="0.45" stop-color="#ff8a20"/>
-      <stop offset="1" stop-color="#d95c08"/>
+    <linearGradient id="tealSide" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#35d7c0"/>
+      <stop offset="0.6" stop-color="#0a776d"/>
+      <stop offset="1" stop-color="#064b46"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#ffd05a"/>
+      <stop offset="0.45" stop-color="#ff941f"/>
+      <stop offset="1" stop-color="#dc600b"/>
     </linearGradient>
     <linearGradient id="word" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#dfe8e5"/>
+      <stop offset="1" stop-color="#e9efed"/>
     </linearGradient>
+    <filter id="softGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="1.1" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
 
-  <!-- Folded F symbol -->
-  <g transform="translate(4 5)">
-    <path d="M28 10c0-5 4-9 9-9h86l-17 18c-4 4-8 6-14 6H52v69L28 79Z" fill="url(#tealA)"/>
-    <path d="M28 10c0-5 4-9 9-9h18L40 18c-8 9-12 18-12 29Z" fill="#4de0c9" opacity=".88"/>
-    <path d="M52 38h58L96 54c-4 5-9 7-15 7H52Z" fill="url(#tealB)"/>
-    <path d="M52 48c0-5 4-9 9-9h16L64 53c-8 9-12 18-12 30Z" fill="#f7a437" opacity=".9"/>
-    <path d="M52 49c0-5 4-9 9-9h10v64L52 92Z" fill="url(#orangeA)"/>
+  <!-- Compact folded-F brand mark -->
+  <g transform="translate(7 5)" filter="url(#softGlow)">
+    <path d="M19 18C19 8 27 1 37 1h78l-15 17c-5 6-10 8-18 8H45v68L19 78Z" fill="url(#tealSide)"/>
+    <path d="M37 1h78l-15 17c-5 6-10 8-18 8H45C45 14 41 7 37 1Z" fill="url(#tealTop)"/>
+    <path d="M45 40h59L91 55c-5 6-10 8-18 8H45Z" fill="url(#tealMid)"/>
+    <path d="M45 47c0-5 4-9 9-9h15v58L45 80Z" fill="url(#amber)"/>
+    <path d="M45 47c0-5 4-9 9-9h11c-10 7-16 18-20 31Z" fill="#ffcb4f" opacity=".72"/>
   </g>
 
-  <!-- Wordmark -->
-  <text x="150" y="57" fill="url(#word)" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="43" font-weight="700" letter-spacing="8">FORNOST</text>
-  <text x="154" y="88" fill="#a9b8b4" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="500" letter-spacing="10">SECURITY</text>
-  <circle cx="152" cy="104" r="2" fill="#18b6a1"/>
-  <line x1="160" y1="104" x2="248" y2="104" stroke="#18b6a1" stroke-width="1" opacity=".6"/>
-  <line x1="248" y1="104" x2="326" y2="104" stroke="#f47920" stroke-width="1" opacity=".65"/>
+  <!-- Enterprise wordmark -->
+  <text x="145" y="51" fill="url(#word)" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="37" font-weight="750" letter-spacing="7.2">FORNOST</text>
+  <text x="149" y="80" fill="#9caaa6" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" font-weight="600" letter-spacing="9.2">SECURITY</text>
+  <line x1="149" y1="94" x2="226" y2="94" stroke="#28c5ae" stroke-width="1.4" opacity=".75"/>
+  <line x1="226" y1="94" x2="285" y2="94" stroke="#f47b20" stroke-width="1.4" opacity=".78"/>
 </svg>
