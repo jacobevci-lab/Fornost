@@ -3,240 +3,123 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#07090d">
-  <meta id="metaDescription" name="description" content="Fornost Security provides enterprise security architecture, secure-by-design, cyber risk, GRC, cloud, identity, application security and security operations advisory.">
-  <title>Fornost Security | Enterprise Cyber Security Advisory</title>
+  <meta name="theme-color" content="#081018">
+  <meta id="metaDescription" name="description" content="Fornost Security provides enterprise cybersecurity advisory across strategy, architecture, risk, GRC, cloud, identity, application security, cyber defense and resilience.">
+  <title>Fornost Security | Enterprise Cybersecurity Advisory</title>
   <link rel="canonical" href="https://fornostsecurity.com/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Fornost Security">
-  <meta property="og:title" content="Fornost Security | Enterprise Cyber Security Advisory">
-  <meta property="og:description" content="Architecture-led cyber security advisory across secure-by-design, cyber risk, GRC, cloud, identity, AppSec and security operations.">
+  <meta property="og:title" content="Fornost Security | Enterprise Cybersecurity Advisory">
+  <meta property="og:description" content="Architecture-led cybersecurity advisory connecting business risk, engineering, operations and assurance.">
   <meta property="og:url" content="https://fornostsecurity.com/">
   <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="ambient ambient-a" aria-hidden="true"></div>
-  <div class="ambient ambient-b" aria-hidden="true"></div>
-
-  <header class="site-header" id="top">
+  <header class="site-header" id="siteHeader">
     <div class="shell nav-wrap">
-      <a class="brand" href="#top" aria-label="Fornost Security home">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 32 32" fill="none"><path d="M8 7h16M8 16h12M8 25h8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-        </span>
+      <a class="brand" href="/" aria-label="Fornost Security home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 34 34" fill="none"><path d="M8 7.5h18M8 17h13M8 26.5h8.5" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/></svg></span>
         <span class="brand-copy"><strong>FORNOST</strong><small>SECURITY</small></span>
       </a>
-
-      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="siteNav">
-        <span></span><span></span>
-      </button>
-
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
       <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
         <a href="#services" data-i18n="nav.services">Services</a>
-        <a href="#approach" data-i18n="nav.approach">Approach</a>
-        <a href="#governance" data-i18n="nav.governance">Risk & GRC</a>
-        <a href="#why" data-i18n="nav.why">Why Fornost</a>
+        <a href="#model" data-i18n="nav.model">Operating model</a>
+        <a href="#company" data-i18n="nav.company">Company</a>
+        <a href="#standards" data-i18n="nav.standards">Standards</a>
         <a class="nav-contact" href="#contact" data-i18n="nav.contact">Contact</a>
-        <div class="language-switch" role="group" aria-label="Language">
-          <button type="button" data-set-lang="en" class="active" aria-pressed="true">EN</button>
-          <button type="button" data-set-lang="tr" aria-pressed="false">TR</button>
-        </div>
+        <div class="language-switch" role="group" aria-label="Language"><button type="button" data-set-lang="en" class="active" aria-pressed="true">EN</button><button type="button" data-set-lang="tr" aria-pressed="false">TR</button></div>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero shell">
-      <div class="hero-copy">
-        <div class="kicker"><span></span><b data-i18n="hero.kicker">ENTERPRISE CYBER SECURITY ADVISORY</b></div>
-        <h1 data-i18n-html="hero.title">Security engineered into the <em>business.</em></h1>
-        <p class="hero-lead" data-i18n="hero.lead">We help organizations turn cyber risk into secure architecture, practical controls and measurable assurance — from board-level governance to hands-on engineering.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#contact" data-i18n="hero.primary">Discuss your priorities</a>
-          <a class="btn btn-ghost" href="#services" data-i18n="hero.secondary">Explore capabilities</a>
+  <main id="mainContent">
+    <section class="hero hero-dark" id="top">
+      <div class="shell hero-layout">
+        <div class="hero-copy">
+          <div class="eyebrow" data-i18n="hero.eyebrow">ENTERPRISE CYBERSECURITY ADVISORY</div>
+          <h1 data-i18n-html="hero.title">Cybersecurity built for <em>complex enterprises.</em></h1>
+          <p class="hero-lead" data-i18n="hero.lead">Fornost connects business risk, security architecture, engineering and assurance so organizations can transform securely without creating another security silo.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="#contact" data-i18n="hero.primary">Discuss your priorities</a><a class="btn btn-secondary" href="#services" data-i18n="hero.secondary">Explore capabilities</a></div>
+          <div class="hero-proof" aria-label="Core capability pillars"><div><span>01</span><b data-i18n="hero.pillar1">Strategy & Risk</b></div><div><span>02</span><b data-i18n="hero.pillar2">Architecture & Engineering</b></div><div><span>03</span><b data-i18n="hero.pillar3">Defense & Assurance</b></div></div>
         </div>
-        <div class="hero-chips" aria-label="Core capabilities">
-          <span>Security Architecture</span><span>Secure-by-Design</span><span>Cyber Risk & GRC</span><span>Cloud & Identity</span><span>AppSec</span><span>SOC & Resilience</span>
-        </div>
-      </div>
-
-      <div class="hero-visual" aria-label="Security architecture model">
-        <div class="visual-toolbar">
-          <span class="visual-title" data-i18n="visual.title">ENTERPRISE SECURITY LENS</span>
-          <span class="visual-state"><i></i><b data-i18n="visual.state">Architecture-led</b></span>
-        </div>
-        <div class="visual-grid" aria-hidden="true"></div>
-        <div class="domain-card dc-business"><small>01</small><strong data-i18n="visual.business">Business & Risk</strong><span data-i18n="visual.businessSub">Impact • resilience</span></div>
-        <div class="domain-card dc-identity"><small>02</small><strong data-i18n="visual.identity">Identity</strong><span>IAM • PAM • Zero Trust</span></div>
-        <div class="domain-card dc-app"><small>03</small><strong data-i18n="visual.apps">Applications</strong><span>SSDLC • AppSec • API</span></div>
-        <div class="domain-card dc-cloud"><small>04</small><strong data-i18n="visual.cloud">Cloud & Infrastructure</strong><span data-i18n="visual.cloudSub">Posture • segmentation</span></div>
-        <div class="domain-card dc-detect"><small>05</small><strong data-i18n="visual.detection">Detection & Response</strong><span>SOC • SIEM • XDR</span></div>
-        <div class="domain-card dc-gov"><small>06</small><strong data-i18n="visual.governance">Governance</strong><span data-i18n="visual.governanceSub">Controls • evidence • audit</span></div>
-        <div class="visual-core">
-          <span>FORNOST SECURITY</span>
-          <strong>Secure-by-Design</strong>
-          <small data-i18n="visual.coreSub">Architecture • Risk • Assurance</small>
-        </div>
-        <svg class="connections" viewBox="0 0 640 560" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M320 280 L132 145 M320 280 L507 138 M320 280 L105 354 M320 280 L527 350 M320 280 L322 480 M320 280 L320 86"/>
-        </svg>
-      </div>
-    </section>
-
-    <section class="framework-bar" aria-label="Framework experience">
-      <div class="shell framework-inner">
-        <p data-i18n="framework.label">Security aligned to business, architecture and regulatory obligations</p>
-        <div class="frameworks"><span>ISO 27001</span><span>NIST CSF</span><span>CIS Controls</span><span>SOC 1 / 2</span><span>PCI DSS</span><span>DORA</span><span>GDPR / KVKK</span></div>
-      </div>
-    </section>
-
-    <section class="section shell" id="services">
-      <div class="section-heading">
-        <div>
-          <div class="kicker"><span></span><b data-i18n="services.kicker">CAPABILITIES</b></div>
-          <h2 data-i18n="services.title">Security strategy that reaches the implementation layer.</h2>
-        </div>
-        <p data-i18n="services.intro">Fornost connects architecture, engineering, governance and operations so recommendations do not stop at a slide deck.</p>
-      </div>
-
-      <div class="services-grid">
-        <article class="service-card featured">
-          <div class="service-top"><span class="service-index">01</span><span class="service-icon">⌁</span></div>
-          <h3 data-i18n="svc.strategy.title">Security Strategy & CISO Advisory</h3>
-          <p data-i18n="svc.strategy.body">Security strategy, operating models, security roadmaps, capability prioritization and executive-level decision support grounded in technical reality.</p>
-          <div class="service-tags"><span>Roadmap</span><span>Operating Model</span><span>Security Posture</span><span>Executive Advisory</span></div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-top"><span class="service-index">02</span><span class="service-icon">⌗</span></div>
-          <h3 data-i18n="svc.arch.title">Enterprise Security Architecture</h3>
-          <p data-i18n="svc.arch.body">Target-state architecture, security principles, reference patterns and architecture governance aligned to business risk and technology strategy.</p>
-          <div class="service-tags"><span>Zero Trust</span><span>Segmentation</span><span>Reference Architecture</span></div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-top"><span class="service-index">03</span><span class="service-icon">◇</span></div>
-          <h3 data-i18n="svc.appsec.title">Secure-by-Design & AppSec</h3>
-          <p data-i18n="svc.appsec.body">Threat modeling, SSDLC controls, design reviews, SAST/DAST governance and application security patterns embedded in delivery.</p>
-          <div class="service-tags"><span>SSDLC</span><span>Threat Modeling</span><span>SAST / DAST</span><span>API Security</span></div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-top"><span class="service-index">04</span><span class="service-icon">▤</span></div>
-          <h3 data-i18n="svc.grc.title">Cyber Risk, GRC & Compliance</h3>
-          <p data-i18n="svc.grc.body">Risk frameworks, BIA, control libraries, policy lifecycle, compliance programs, audit readiness, findings and remediation governance.</p>
-          <div class="service-tags"><span>ISO 27001</span><span>SOC 2</span><span>PCI DSS</span><span>DORA</span><span>GDPR / KVKK</span></div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-top"><span class="service-index">05</span><span class="service-icon">☁</span></div>
-          <h3 data-i18n="svc.cloud.title">Cloud, M365 & Identity Security</h3>
-          <p data-i18n="svc.cloud.body">Cloud security posture, Microsoft security architecture, IAM/PAM, Conditional Access, endpoint governance and data protection.</p>
-          <div class="service-tags"><span>AWS</span><span>Entra ID</span><span>M365</span><span>IAM / PAM</span><span>DLP</span></div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-top"><span class="service-index">06</span><span class="service-icon">⌁</span></div>
-          <h3 data-i18n="svc.soc.title">SOC, Detection & Security Operations</h3>
-          <p data-i18n="svc.soc.body">SIEM/SOC architecture, detection engineering, correlation use cases, automation, EDR/XDR operations and monitoring maturity.</p>
-          <div class="service-tags"><span>SIEM</span><span>Sentinel</span><span>XDR</span><span>Detection Engineering</span></div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-top"><span class="service-index">07</span><span class="service-icon">△</span></div>
-          <h3 data-i18n="svc.vuln.title">Vulnerability & Security Assurance</h3>
-          <p data-i18n="svc.vuln.body">Vulnerability management, penetration-test governance, security validation, remediation programs and continuous control assurance.</p>
-          <div class="service-tags"><span>Vulnerability Mgmt</span><span>Pentest</span><span>Remediation</span><span>Assurance</span></div>
-        </article>
-
-        <article class="service-card">
-          <div class="service-top"><span class="service-index">08</span><span class="service-icon">∞</span></div>
-          <h3 data-i18n="svc.resilience.title">Resilience & Third-Party Security</h3>
-          <p data-i18n="svc.resilience.body">BCP/DR security reviews, third-party risk, vendor security assessments and resilience controls for critical services.</p>
-          <div class="service-tags"><span>BCP / DR</span><span>TPRM</span><span>Vendor Risk</span><span>Critical Services</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section shell" id="approach">
-      <div class="approach-panel">
-        <div class="approach-copy">
-          <div class="kicker"><span></span><b data-i18n="approach.kicker">HOW WE WORK</b></div>
-          <h2 data-i18n="approach.title">From ambiguity to an executable security model.</h2>
-          <p data-i18n="approach.body">We start with business context and evidence, shape the target architecture, translate it into controls and keep assurance connected to operational reality.</p>
-        </div>
-        <div class="approach-steps">
-          <article><span>01</span><b data-i18n="approach.s1.title">Discover</b><p data-i18n="approach.s1.body">Business context, assets, architecture, risks and constraints.</p></article>
-          <article><span>02</span><b data-i18n="approach.s2.title">Architect</b><p data-i18n="approach.s2.body">Principles, target state, control patterns and roadmap.</p></article>
-          <article><span>03</span><b data-i18n="approach.s3.title">Enable</b><p data-i18n="approach.s3.body">Implementation support, hardening, integrations and ownership.</p></article>
-          <article><span>04</span><b data-i18n="approach.s4.title">Assure</b><p data-i18n="approach.s4.body">Evidence, testing, monitoring, audit readiness and remediation.</p></article>
+        <div class="enterprise-map" aria-label="Enterprise security operating model">
+          <div class="map-head"><span data-i18n="map.title">ENTERPRISE SECURITY OPERATING MODEL</span><i></i><b data-i18n="map.state">Risk-aligned</b></div>
+          <div class="map-body">
+            <div class="map-axis"><span data-i18n="map.business">BUSINESS</span><span data-i18n="map.technology">TECHNOLOGY</span><span data-i18n="map.assurance">ASSURANCE</span></div>
+            <div class="map-row"><small>01</small><strong data-i18n="map.strategy">Cyber Strategy & Governance</strong><span data-i18n="map.strategySub">Risk appetite • operating model • roadmap</span></div>
+            <div class="map-row"><small>02</small><strong data-i18n="map.architecture">Security Architecture</strong><span data-i18n="map.architectureSub">Zero Trust • cloud • identity • network</span></div>
+            <div class="map-row"><small>03</small><strong data-i18n="map.secure">Secure-by-Design</strong><span data-i18n="map.secureSub">Applications • data • platforms • AI</span></div>
+            <div class="map-row"><small>04</small><strong data-i18n="map.defense">Cyber Defense</strong><span data-i18n="map.defenseSub">SOC • detection • threat • response</span></div>
+            <div class="map-row"><small>05</small><strong data-i18n="map.assure">Continuous Assurance</strong><span data-i18n="map.assureSub">Controls • evidence • testing • resilience</span></div>
+            <div class="map-footer"><span>FORNOST</span><b data-i18n="map.footer">SECURITY BY DESIGN. ASSURANCE BY EVIDENCE.</b></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section shell governance" id="governance">
-      <div class="governance-visual">
-        <div class="gov-ring ring-1"></div><div class="gov-ring ring-2"></div>
-        <div class="gov-core"><small>FORNOST</small><strong data-i18n="gov.core">Connected Security Governance</strong><span data-i18n="gov.coreSub">Business risk → controls → evidence → assurance</span></div>
-        <div class="gov-node gn1" data-i18n="gov.n1">Business Risk</div><div class="gov-node gn2" data-i18n="gov.n2">Architecture</div><div class="gov-node gn3" data-i18n="gov.n3">Controls</div><div class="gov-node gn4" data-i18n="gov.n4">Evidence</div><div class="gov-node gn5" data-i18n="gov.n5">Audit</div><div class="gov-node gn6" data-i18n="gov.n6">Operations</div>
-      </div>
-      <div class="governance-copy">
-        <div class="kicker"><span></span><b data-i18n="gov.kicker">RISK & GOVERNANCE</b></div>
-        <h2 data-i18n="gov.title">GRC that stays connected to real security.</h2>
-        <p data-i18n="gov.body">Governance should connect business risk to technical controls and operational evidence. We build GRC models that support decisions, not just audits.</p>
-        <div class="benefit-list">
-          <article><span>✓</span><div><b data-i18n="gov.b1.title">Unified control thinking</b><p data-i18n="gov.b1.body">Map technical and governance controls across multiple obligations without duplicating effort.</p></div></article>
-          <article><span>✓</span><div><b data-i18n="gov.b2.title">Audit-ready by design</b><p data-i18n="gov.b2.body">Build ownership, evidence and remediation into the operating model from the start.</p></div></article>
-          <article><span>✓</span><div><b data-i18n="gov.b3.title">Risk-driven prioritization</b><p data-i18n="gov.b3.body">Prioritize investment using business impact, exposure and control effectiveness.</p></div></article>
+    <section class="trust-strip" id="standards"><div class="shell trust-inner"><p data-i18n="trust.label">Aligned to leading security, risk and regulatory frameworks</p><div class="trust-items"><span>ISO/IEC 27001</span><span>NIST CSF</span><span>CIS Controls</span><span>SOC 1 / SOC 2</span><span>PCI DSS</span><span>DORA</span><span>GDPR</span><span>KVKK</span></div></div></section>
+
+    <section class="section section-light" id="services">
+      <div class="shell">
+        <div class="section-head"><div><span class="section-kicker" data-i18n="services.kicker">CYBERSECURITY CAPABILITIES</span><h2 data-i18n="services.title">One security partner across the enterprise lifecycle.</h2></div><p data-i18n="services.intro">Our service portfolio spans executive advisory, enterprise architecture, engineering, cyber defense and assurance. Engagements can be focused on one domain or coordinated as a multi-year transformation roadmap.</p></div>
+
+        <div class="capability-group">
+          <div class="group-heading"><span>01</span><div><h3 data-i18n="group.strategy.title">Strategy, Risk & Governance</h3><p data-i18n="group.strategy.body">Translate business priorities and regulatory obligations into a defensible security program.</p></div></div>
+          <div class="capability-grid">
+            <article class="cap-card"><span class="cap-no">01.1</span><h4 data-i18n="svc.strategy.title">Cyber Strategy & CISO Advisory</h4><p data-i18n="svc.strategy.body">Security strategy, maturity assessment, operating model, investment roadmap, board reporting, risk appetite and virtual/fractional security leadership.</p><ul><li data-i18n="svc.strategy.l1">Cybersecurity strategy & roadmap</li><li data-i18n="svc.strategy.l2">Security maturity & capability assessment</li><li data-i18n="svc.strategy.l3">Executive, board & CISO advisory</li></ul></article>
+            <article class="cap-card"><span class="cap-no">01.2</span><h4 data-i18n="svc.grc.title">Cyber Risk, GRC & Compliance</h4><p data-i18n="svc.grc.body">Enterprise cyber risk models, BIA, control libraries, policies, regulatory mapping, audit readiness, evidence governance and remediation.</p><ul><li>ISO 27001 • SOC 1/2 • PCI DSS</li><li>DORA • GDPR • KVKK</li><li data-i18n="svc.grc.l3">Risk, audit, findings & remediation</li></ul></article>
+            <article class="cap-card"><span class="cap-no">01.3</span><h4 data-i18n="svc.privacy.title">Privacy & Data Governance</h4><p data-i18n="svc.privacy.body">Privacy-by-design, data classification, retention, data loss prevention and governance models that connect sensitive data to business and regulatory risk.</p><ul><li data-i18n="svc.privacy.l1">Data classification & labeling</li><li data-i18n="svc.privacy.l2">DLP & information protection</li><li data-i18n="svc.privacy.l3">Privacy governance & control design</li></ul></article>
+            <article class="cap-card"><span class="cap-no">01.4</span><h4 data-i18n="svc.tprm.title">Third-Party & Supply Chain Risk</h4><p data-i18n="svc.tprm.body">Vendor security governance, due diligence, risk tiering, contractual security requirements and continuous third-party assurance.</p><ul><li data-i18n="svc.tprm.l1">Vendor security assessment</li><li data-i18n="svc.tprm.l2">Supply-chain control requirements</li><li data-i18n="svc.tprm.l3">TPRM lifecycle & monitoring</li></ul></article>
+          </div>
         </div>
+
+        <div class="capability-group">
+          <div class="group-heading"><span>02</span><div><h3 data-i18n="group.arch.title">Architecture, Identity & Infrastructure</h3><p data-i18n="group.arch.body">Design secure target states and control patterns across hybrid enterprise environments.</p></div></div>
+          <div class="capability-grid">
+            <article class="cap-card"><span class="cap-no">02.1</span><h4 data-i18n="svc.arch.title">Enterprise Security Architecture & Zero Trust</h4><p data-i18n="svc.arch.body">Target-state architecture, security principles, reference architectures, segmentation models, trust boundaries and architecture governance.</p><ul><li data-i18n="svc.arch.l1">Target-state & reference architecture</li><li data-i18n="svc.arch.l2">Zero Trust & segmentation</li><li data-i18n="svc.arch.l3">Architecture review & governance</li></ul></article>
+            <article class="cap-card"><span class="cap-no">02.2</span><h4 data-i18n="svc.identity.title">Identity, Access & Privileged Security</h4><p data-i18n="svc.identity.body">IAM, PAM, identity governance, least privilege, Conditional Access and authentication architectures for workforce and privileged identities.</p><ul><li>IAM • IGA • PAM</li><li data-i18n="svc.identity.l2">Conditional Access & MFA</li><li data-i18n="svc.identity.l3">Identity lifecycle & access governance</li></ul></article>
+            <article class="cap-card"><span class="cap-no">02.3</span><h4 data-i18n="svc.network.title">Network, Infrastructure & Endpoint Security</h4><p data-i18n="svc.network.body">Network security architecture, micro-segmentation, secure connectivity, endpoint protection, hardening and enterprise security baselines.</p><ul><li data-i18n="svc.network.l1">Network & segmentation architecture</li><li data-i18n="svc.network.l2">Endpoint, EDR/XDR & hardening</li><li data-i18n="svc.network.l3">Infrastructure security baselines</li></ul></article>
+            <article class="cap-card"><span class="cap-no">02.4</span><h4 data-i18n="svc.cloud.title">Cloud & Platform Security</h4><p data-i18n="svc.cloud.body">Cloud security architecture, landing-zone controls, posture management, workload protection and secure Microsoft 365 / hybrid-cloud operating models.</p><ul><li>AWS • Azure • M365</li><li>CSPM • CWPP • CNAPP</li><li data-i18n="svc.cloud.l3">Cloud guardrails & posture governance</li></ul></article>
+          </div>
+        </div>
+
+        <div class="capability-group">
+          <div class="group-heading"><span>03</span><div><h3 data-i18n="group.product.title">Product, Application & Data Security</h3><p data-i18n="group.product.body">Embed security in software, platforms and data flows before production risk is created.</p></div></div>
+          <div class="capability-grid">
+            <article class="cap-card"><span class="cap-no">03.1</span><h4 data-i18n="svc.appsec.title">Secure-by-Design, AppSec & DevSecOps</h4><p data-i18n="svc.appsec.body">Threat modeling, SSDLC, secure design review, SAST/DAST/SCA governance, API security and security gates integrated into delivery pipelines.</p><ul><li>Threat Modeling • SSDLC</li><li>SAST • DAST • SCA • API</li><li data-i18n="svc.appsec.l3">CI/CD security & design review</li></ul></article>
+            <article class="cap-card"><span class="cap-no">03.2</span><h4 data-i18n="svc.data.title">Data Security & Information Protection</h4><p data-i18n="svc.data.body">Data discovery, classification, encryption, DLP, information protection, insider-risk controls and secure data lifecycle architecture.</p><ul><li data-i18n="svc.data.l1">Discovery, classification & labeling</li><li data-i18n="svc.data.l2">DLP, encryption & rights protection</li><li data-i18n="svc.data.l3">Insider risk & data access governance</li></ul></article>
+            <article class="cap-card"><span class="cap-no">03.3</span><h4 data-i18n="svc.ot.title">OT, ICS, IoT & Edge Security</h4><p data-i18n="svc.ot.body">Security architecture and risk assessment for operational technology, industrial control environments, connected devices and edge systems.</p><ul><li data-i18n="svc.ot.l1">OT/ICS security architecture</li><li data-i18n="svc.ot.l2">Asset visibility & segmentation</li><li data-i18n="svc.ot.l3">IoT/edge risk & control design</li></ul></article>
+            <article class="cap-card"><span class="cap-no">03.4</span><h4 data-i18n="svc.ai.title">AI & Emerging Technology Security</h4><p data-i18n="svc.ai.body">Security governance for AI systems, emerging platforms and cryptographic change — including AI risk, model/data controls and quantum-readiness planning.</p><ul><li data-i18n="svc.ai.l1">AI security & governance</li><li data-i18n="svc.ai.l2">Emerging-technology risk assessment</li><li data-i18n="svc.ai.l3">Cryptography & quantum-readiness roadmap</li></ul></article>
+          </div>
+        </div>
+
+        <div class="capability-group">
+          <div class="group-heading"><span>04</span><div><h3 data-i18n="group.defense.title">Cyber Defense, Assurance & Resilience</h3><p data-i18n="group.defense.body">Continuously validate exposure, detect threats and build the ability to withstand and recover from incidents.</p></div></div>
+          <div class="capability-grid">
+            <article class="cap-card"><span class="cap-no">04.1</span><h4 data-i18n="svc.soc.title">SOC, SIEM, Detection Engineering & XDR</h4><p data-i18n="svc.soc.body">SOC architecture, SIEM onboarding, correlation and detection use cases, automation, threat hunting and EDR/XDR operating-model improvement.</p><ul><li>SIEM • SOAR • XDR</li><li data-i18n="svc.soc.l2">Detection engineering & threat hunting</li><li data-i18n="svc.soc.l3">SOC maturity & co-managed enablement</li></ul></article>
+            <article class="cap-card"><span class="cap-no">04.2</span><h4 data-i18n="svc.vuln.title">Vulnerability & Attack Surface Management</h4><p data-i18n="svc.vuln.body">Risk-based vulnerability management, attack-surface discovery, remediation governance, credentialed scanning and continuous exposure reduction.</p><ul><li data-i18n="svc.vuln.l1">Risk-based vulnerability management</li><li>ASM • EASM • Exposure Management</li><li data-i18n="svc.vuln.l3">Remediation governance & metrics</li></ul></article>
+            <article class="cap-card"><span class="cap-no">04.3</span><h4 data-i18n="svc.offensive.title">Penetration Testing & Adversary Simulation</h4><p data-i18n="svc.offensive.body">Independent technical assurance across applications, APIs, networks and cloud environments, including red-team and attack-simulation coordination.</p><ul><li data-i18n="svc.offensive.l1">Web, API, network & cloud testing</li><li data-i18n="svc.offensive.l2">Red team & adversary simulation</li><li data-i18n="svc.offensive.l3">Pentest governance & remediation validation</li></ul></article>
+            <article class="cap-card"><span class="cap-no">04.4</span><h4 data-i18n="svc.ir.title">Incident Response, DFIR & Cyber Resilience</h4><p data-i18n="svc.ir.body">Incident readiness, response playbooks, forensic coordination, ransomware preparedness, crisis exercises, BCP/DR security and recovery assurance.</p><ul><li data-i18n="svc.ir.l1">Incident readiness & response planning</li><li data-i18n="svc.ir.l2">DFIR & ransomware preparedness</li><li data-i18n="svc.ir.l3">BCP/DR, tabletop & recovery assurance</li></ul></article>
+          </div>
+        </div>
+        <div class="capability-note"><span data-i18n="services.noteLabel">ALSO INCLUDED</span><p data-i18n="services.note">Security awareness and human-risk programs, security tool selection and PoCs, control automation, security metrics/KPIs/KRIs, audit remediation and managed/co-managed operating-model design can be incorporated into any engagement.</p></div>
       </div>
     </section>
 
-    <section class="section shell" id="why">
-      <div class="section-heading compact">
-        <div>
-          <div class="kicker"><span></span><b data-i18n="why.kicker">WHY FORNOST</b></div>
-          <h2 data-i18n="why.title">Senior security thinking without the silos.</h2>
-        </div>
-        <p data-i18n="why.body">The same engagement can span architecture, engineering, governance and operations — because security problems rarely respect organizational boundaries.</p>
-      </div>
-      <div class="principles-grid">
-        <article><span>01</span><h3 data-i18n="why.p1.title">Architecture-led</h3><p data-i18n="why.p1.body">Decisions are anchored in business context, technical architecture and explicit control objectives.</p></article>
-        <article><span>02</span><h3 data-i18n="why.p2.title">Vendor-neutral</h3><p data-i18n="why.p2.body">Technology choices are evaluated against capability, risk, integration and operational fit.</p></article>
-        <article><span>03</span><h3 data-i18n="why.p3.title">Control-connected</h3><p data-i18n="why.p3.body">Architecture and engineering stay traceable to risk, compliance and assurance requirements.</p></article>
-        <article><span>04</span><h3 data-i18n="why.p4.title">Delivery-oriented</h3><p data-i18n="why.p4.body">Recommendations are structured around ownership, sequencing and measurable outcomes.</p></article>
-      </div>
-    </section>
+    <section class="section section-dark" id="model"><div class="shell model-layout"><div class="model-copy"><span class="section-kicker light" data-i18n="model.kicker">OUR OPERATING MODEL</span><h2 data-i18n="model.heading">Strategy to assurance, connected end to end.</h2><p data-i18n="model.body">Cybersecurity programs fail when risk, architecture, engineering and audit run as separate systems. Our operating model keeps the business objective, technical control and evidence chain connected.</p><div class="model-principles"><div><span>01</span><b data-i18n="model.p1.title">Business-led</b><p data-i18n="model.p1.body">Start with critical services, business impact and risk appetite.</p></div><div><span>02</span><b data-i18n="model.p2.title">Architecture-led</b><p data-i18n="model.p2.body">Turn risk into target states, patterns and guardrails.</p></div><div><span>03</span><b data-i18n="model.p3.title">Evidence-driven</b><p data-i18n="model.p3.body">Measure control operation, exposure and remediation continuously.</p></div></div></div><div class="model-stack" aria-label="Fornost security lifecycle"><div class="stack-row"><span>01</span><div><b data-i18n="model.s1.title">Discover & Prioritize</b><p data-i18n="model.s1.body">Business context • assets • threats • regulatory obligations • current-state evidence</p></div></div><div class="stack-row"><span>02</span><div><b data-i18n="model.s2.title">Architect & Govern</b><p data-i18n="model.s2.body">Target state • security principles • control model • ownership • roadmap</p></div></div><div class="stack-row"><span>03</span><div><b data-i18n="model.s3.title">Engineer & Integrate</b><p data-i18n="model.s3.body">Hardening • IAM • cloud • AppSec • network • data • security tooling</p></div></div><div class="stack-row"><span>04</span><div><b data-i18n="model.s4.title">Detect & Respond</b><p data-i18n="model.s4.body">Telemetry • SIEM/XDR • detection • automation • response • recovery</p></div></div><div class="stack-row accent"><span>05</span><div><b data-i18n="model.s5.title">Assure & Improve</b><p data-i18n="model.s5.body">Evidence • testing • audit • metrics • findings • continuous assurance</p></div></div></div></div></section>
 
-    <section class="section shell" id="contact">
-      <div class="contact-panel">
-        <div>
-          <div class="kicker"><span></span><b data-i18n="contact.kicker">START A CONVERSATION</b></div>
-          <h2 data-i18n="contact.title">Bring the security problem. We’ll help structure the answer.</h2>
-          <p data-i18n="contact.body">Architecture review, secure-by-design, GRC transformation, cloud and identity security, SOC improvement or a broader security roadmap — tell us where you need clarity.</p>
-        </div>
-        <a class="email-card" href="mailto:info@fornostsecurity.com">
-          <small data-i18n="contact.emailLabel">EMAIL</small>
-          <strong>info@fornostsecurity.com</strong>
-          <span>↗</span>
-        </a>
-      </div>
-    </section>
+    <section class="section section-light" id="company"><div class="shell"><div class="section-head company-head"><div><span class="section-kicker" data-i18n="company.kicker">COMPANY</span><h2 data-i18n="company.title">Security should enable the business — not sit beside it.</h2></div><p data-i18n="company.body">Fornost Security is built around one principle: cybersecurity becomes valuable when strategy, architecture, engineering, operations and governance reinforce each other.</p></div><div class="mission-grid"><article class="mission-card dark-card"><span data-i18n="mission.label">MISSION</span><h3 data-i18n="mission.title">Make enterprise security actionable.</h3><p data-i18n="mission.body">Our mission is to turn cyber risk into practical architecture, controls and operating models that teams can implement, measure and improve.</p></article><article class="mission-card"><span data-i18n="vision.label">VISION</span><h3 data-i18n="vision.title">A future where security is part of how organizations build and operate.</h3><p data-i18n="vision.body">We envision organizations that can innovate faster because security, resilience and assurance are designed into every layer of the enterprise.</p></article></div><div class="values-grid"><article><span>01</span><h4 data-i18n="values.v1.title">Secure-by-Design</h4><p data-i18n="values.v1.body">Build security into architecture and delivery rather than adding controls after the fact.</p></article><article><span>02</span><h4 data-i18n="values.v2.title">Risk-Based</h4><p data-i18n="values.v2.body">Prioritize what materially reduces business exposure and strengthens critical services.</p></article><article><span>03</span><h4 data-i18n="values.v3.title">Vendor-Neutral</h4><p data-i18n="values.v3.body">Select technologies against capability, integration, operating fit and measurable outcomes.</p></article><article><span>04</span><h4 data-i18n="values.v4.title">Evidence-Driven</h4><p data-i18n="values.v4.body">Use evidence, telemetry and control effectiveness to guide decisions and assurance.</p></article></div></div></section>
+
+    <section class="section section-soft"><div class="shell engagement-layout"><div><span class="section-kicker" data-i18n="engage.kicker">ENGAGEMENT MODELS</span><h2 data-i18n="engage.title">Focused assessments or long-term transformation.</h2><p data-i18n="engage.body">Engagements are shaped around the outcome you need — from independent review to architecture ownership, implementation support and ongoing advisory.</p></div><div class="engagement-list"><article><span>01</span><b data-i18n="engage.e1.title">Advisory & Assessment</b><p data-i18n="engage.e1.body">Independent review, maturity assessment, risk analysis and prioritized recommendations.</p></article><article><span>02</span><b data-i18n="engage.e2.title">Architecture & Transformation</b><p data-i18n="engage.e2.body">Target-state design, security roadmap, control architecture and transformation governance.</p></article><article><span>03</span><b data-i18n="engage.e3.title">Engineering & Enablement</b><p data-i18n="engage.e3.body">Implementation support, hardening, integration, use cases, policies and operating procedures.</p></article><article><span>04</span><b data-i18n="engage.e4.title">Continuous Advisory & Assurance</b><p data-i18n="engage.e4.body">Ongoing CISO/architecture support, control validation, metrics, audit readiness and improvement.</p></article></div></div></section>
+
+    <section class="section section-contact" id="contact"><div class="shell contact-panel"><div><span class="section-kicker light" data-i18n="contact.kicker">START A CONVERSATION</span><h2 data-i18n="contact.title">Bring the security challenge. We’ll structure the path forward.</h2><p data-i18n="contact.body">For architecture reviews, GRC transformation, cloud and identity security, secure-by-design, cyber defense, resilience or a broader cybersecurity roadmap, contact Fornost Security.</p></div><a class="email-card" href="mailto:info@fornostsecurity.com"><small data-i18n="contact.email">EMAIL</small><strong>info@fornostsecurity.com</strong><span>↗</span></a></div></section>
   </main>
 
-  <footer class="site-footer">
-    <div class="shell footer-inner">
-      <a class="brand" href="#top" aria-label="Fornost Security home">
-        <span class="brand-mark mini" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M8 7h16M8 16h12M8 25h8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span>
-        <span class="brand-copy"><strong>FORNOST</strong><small>SECURITY</small></span>
-      </a>
-      <p>© <span id="year"></span> Fornost Security. <span data-i18n="footer.rights">All rights reserved.</span></p>
-      <div class="footer-links"><a href="mailto:info@fornostsecurity.com">info@fornostsecurity.com</a><a href="#top" data-i18n="footer.top">Back to top ↑</a></div>
-    </div>
-  </footer>
-
+  <footer class="site-footer"><div class="shell footer-grid"><div><a class="brand footer-brand" href="/" aria-label="Fornost Security home"><span class="brand-mark mini" aria-hidden="true"><svg viewBox="0 0 34 34" fill="none"><path d="M8 7.5h18M8 17h13M8 26.5h8.5" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/></svg></span><span class="brand-copy"><strong>FORNOST</strong><small>SECURITY</small></span></a><p class="footer-tagline" data-i18n="footer.tagline">Enterprise cybersecurity advisory & architecture.</p></div><div class="footer-meta"><span>© <span id="year"></span> Fornost Security.</span><span data-i18n="footer.rights">All rights reserved.</span></div><div class="footer-actions"><a href="mailto:info@fornostsecurity.com">info@fornostsecurity.com</a><button type="button" id="backToTop" data-i18n="footer.top">Back to top ↑</button></div></div></footer>
+  <button class="floating-top" id="floatingTop" type="button" aria-label="Back to top">↑</button>
   <script src="/script.js" defer></script>
 </body>
 </html>
