@@ -3,102 +3,168 @@
 **Assessment date:** 2026-09-21  
 **Repository:** `jacobevci-lab/Fornost`  
 **Production:** `https://fornostsecurity.com`  
-**Scope:** static HTML/CSS/JavaScript, Cloudflare Workers static-assets configuration, response-header policy, deployment supply chain.
+**Scope:** static HTML/CSS/JavaScript, Cloudflare Workers static-assets configuration, response-header policy, deployment supply chain and production edge behavior.
 
 ## Executive summary
 
-The website has a deliberately small attack surface: it is static, has no authentication, no application backend, no form-processing endpoint, no database, no file upload, no third-party runtime JavaScript, and no browser network calls (`fetch`/XHR/WebSocket). The existing CSP and anti-framing headers are strong.
+The website has a deliberately small attack surface: it is static, has no authentication, no application backend, no form-processing endpoint, no database, no file upload, no third-party runtime JavaScript and no browser network calls (`fetch`/XHR/WebSocket).
 
-No exploitable Critical or High application-code vulnerability was identified during source review. The principal material weakness found was deployment integrity: production is deployed automatically from `main`, while the repository currently has no branch protection/ruleset requiring review or security checks. A second supply-chain weakness was the use of bare `npx wrangler`, which resolves the latest Wrangler when no local version is declared; this assessment pins Wrangler in `package.json` and adds continuous CodeQL/SCA checks.
+No exploitable Critical, High, Medium or Low application vulnerability remains open in the assessed website scope. Source analysis, dependency analysis and live external DAST are now running continuously. Production edge checks also validate HTTPS redirects, security headers, supported TLS versions and HTTP TRACE handling.
 
-## Assessment coverage
+The remaining material finding is repository/deployment integrity: production deploys automatically from `main`, while the repository rulesets API currently returns no active repository ruleset. Until `main` is protected, a direct or compromised push can bypass the intended pull-request/security-check workflow.
 
-- SAST-oriented source review for DOM XSS, unsafe HTML/JS execution, URL/open-redirect sinks, client storage, network calls, inline event handlers, external script loading, secret patterns and insecure browser APIs.
-- SCA review of runtime and build dependencies.
-- CycloneDX 1.6 SBOM generation.
+## Assessment coverage and completed tests
+
+- SAST/source review for DOM XSS, unsafe HTML/JS execution, URL/open-redirect sinks, client storage, network calls, inline event handlers, external script loading, secret patterns and insecure browser APIs.
+- GitHub CodeQL with `security-extended` queries for JavaScript/TypeScript.
+- SCA with `npm audit --audit-level=high`.
+- Full resolved dependency CycloneDX SBOM generation in CI.
 - OWASP Top 10 (2021) applicability and control mapping.
-- Configuration review of Cloudflare Workers static assets and security response headers.
-- Local dynamic/browser QA and malicious language-parameter review.
-- Live external DAST/TLS/edge-header verification is still required from a scanner network that can resolve the production hostname.
+- Cloudflare static-asset and response-header review.
+- Live OWASP ZAP baseline scanning against production.
+- Live HTTP/HTTPS and `www` redirect verification.
+- Live TLS policy verification: TLS 1.2 and TLS 1.3 accepted; TLS 1.1 and below rejected.
+- HTTP TRACE verification: production returns `405`.
+- HSTS, CSP, MIME-sniffing, clickjacking, Permissions Policy, COOP, COEP and CORP verification.
+- Cache policy review and explicit cache directives for public static content.
+
+## Current security test result
+
+| Control | Result |
+|---|---|
+| CodeQL / JavaScript (`security-extended`) | Pass — no security finding reported in the validated run |
+| npm audit | Pass — 0 known vulnerabilities in the resolved build dependency graph |
+| Runtime npm dependencies | 0 |
+| Full CI SBOM | Pass — 38 resolved components in the validated build SBOM |
+| OWASP ZAP production baseline | Pass — 0 Low / 0 Medium / 0 High alert groups after remediation |
+| ZAP informational alerts | 7 alert groups — reviewed and triaged in `security/DAST-TRIAGE.md` |
+| HTTPS apex | Pass |
+| HTTP -> HTTPS redirect | Pass |
+| `www` -> HTTPS apex redirect | Pass |
+| TLS 1.2 | Pass |
+| TLS 1.3 | Pass |
+| TLS <= 1.1 | Rejected as required |
+| HTTP TRACE | Rejected with 405 |
+| HSTS | Pass — `max-age=31536000` |
+| CSP / nosniff / anti-framing / Permissions Policy | Pass |
+| COOP / COEP / CORP | Pass |
+| GitHub `main` repository ruleset | **Open — no active ruleset currently returned** |
 
 ## Findings
 
 ### SEC-001 — Production branch has no required protection or security gate — Medium — Open
 
-The `main` branch is not protected and production deploys automatically from `main`. A mistaken or compromised direct push can therefore become production without mandatory review or passing security checks.
+Production deploys automatically from `main`. The repository rulesets API returned an empty ruleset collection during this assessment. A mistaken or compromised direct push can therefore become production without mandatory pull-request review or mandatory successful security checks.
 
 **OWASP:** A08 Software and Data Integrity Failures  
-**Recommended remediation:** enable a GitHub ruleset/branch protection for `main`, require pull requests, require the Security workflow checks, prevent force pushes/deletion, and consider requiring signed commits for human contributors.
+**Required remediation:** create an active ruleset for `main`, require pull requests, require `CodeQL / JavaScript` and `SCA / npm audit + SBOM`, require the branch to be current before merge, block force pushes and deletion, and require conversation resolution.
 
-### SEC-002 — Wrangler deployment tool was not locally pinned — Medium — Fixed in repository
+The exact baseline is documented in `security/REPOSITORY-PROTECTION.md`.
 
-The deployment documentation used `npx wrangler deploy` but the repository had no `package.json`. Cloudflare documents that bare `npx wrangler` uses the latest Wrangler when Wrangler is not installed locally. This creates avoidable build drift and supply-chain uncertainty.
+The production ZAP job should remain a post-deploy/continuous verification control in its current form because it scans the deployed production site rather than a pull-request candidate.
 
-**Remediation applied:** exact build dependency `wrangler@4.135.0` is declared in `package.json`; Cloudflare Workers Builds uses the Wrangler version set in `package.json`. Continuous `npm audit` and Dependabot configuration are also added.
+### SEC-002 — Wrangler deployment tool was not locally pinned — Medium — Fixed
 
-**SCA note:** Wrangler 4.135.0 is above the patched boundary for the 2026 `wrangler pages deploy` command-injection advisory (patched in 4.59.1+) and current vulnerability databases report no known direct vulnerability in 4.135.0 as of the assessment date.
+The deployment process previously relied on bare `npx wrangler`, allowing tool version drift when no local version was installed.
+
+**Remediation applied:** exact build dependency `wrangler@4.135.0` is declared in `package.json`; SCA runs continuously and the resolved dependency graph is included in the CI-generated SBOM artifact.
 
 ### SEC-003 — Trusted `innerHTML` translation sink — Informational — Accepted / hardening candidate
 
-The language switcher writes only hard-coded translation constants to `innerHTML` for the styled hero heading. The `lang` input is validated against the translation object and unrecognized values fall back to English, so no user-controlled HTML flow was identified. This is not currently exploitable, but eliminating HTML sinks is preferable.
+The language switcher writes only hard-coded translation constants to `innerHTML` for the styled hero heading. The `lang` input is validated against the translation object and unrecognized values fall back to English. No user-controlled HTML data flow was identified and CodeQL/ZAP did not identify an exploitable XSS path.
 
-**Recommended hardening:** split the hero heading into text-only translation nodes and use `textContent` exclusively.
+**Optional hardening:** split the hero heading into text-only translation nodes and use `textContent` exclusively. This is defense-in-depth rather than remediation of an identified exploitable vulnerability.
 
-### SEC-004 — External live DAST not completed from assessment runtime — Informational — Open
+### SEC-004 — External live DAST and production edge verification — Informational — Closed
 
-The assessment runtime cannot resolve/reach `fornostsecurity.com` or the Workers preview hostname, so an independent live verification of TLS configuration, redirect chains, HTTP methods, cache behavior and actual edge response headers could not be executed from this scanner environment.
+Live external verification is now implemented through GitHub Actions and successfully reaches production.
 
-**Required close-out:** run a live scan from an externally connected scanner and verify `http -> https`, `www -> apex`, CSP, HSTS decision, TLS 1.2+, TLS 1.3, method handling, cache headers, robots/sitemap and error-page behavior.
+Verified controls include:
+
+- apex HTTPS availability;
+- HTTP -> HTTPS redirect;
+- HTTP/HTTPS `www` -> HTTPS apex redirect;
+- HSTS delivery;
+- CSP, `X-Content-Type-Options`, `X-Frame-Options` and Permissions Policy;
+- COOP/CORP and COEP;
+- TLS 1.2 and TLS 1.3 acceptance;
+- TLS 1.1 and below rejection;
+- TRACE rejection with HTTP 405;
+- OWASP ZAP passive baseline across discovered production resources.
+
+### SEC-005 — Missing Cross-Origin-Embedder-Policy — Low — Fixed
+
+A production ZAP scan initially reported the site-isolation rule because COEP was absent.
+
+**Remediation applied:** `Cross-Origin-Embedder-Policy: require-corp` was added alongside the existing `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Resource-Policy: same-origin` controls.
+
+The follow-up production scan reports the site-isolation rule as PASS and the final ZAP risk summary contains informational findings only.
+
+## ZAP informational triage
+
+The remaining ZAP alerts are intentionally retained in scanner evidence rather than suppressed. Detailed rationale is maintained in `security/DAST-TRIAGE.md`.
+
+- **10015 — Re-examine Cache-control Directives:** accepted; affected content is public/static and explicit cache policy is configured.
+- **10049 — Storable and Cacheable Content:** accepted; caching is intentional and there is no authenticated, personal or user-specific response in scope.
+- **10094 — Base64 Disclosure:** accepted heuristic false positive; sampled values decode to non-text binary noise and no secret payload was identified.
+- **90005 — Sec-Fetch-* request headers missing:** accepted scanner artifact; these are browser-generated request headers and cannot be forced by the origin for arbitrary scanner requests.
+
+The DAST workflow is configured to fail when any Low, Medium or High ZAP alert group appears. Informational alerts remain visible for review.
 
 ## Positive security observations
 
-- No application backend or server-side request functionality in the website scope.
+- No application backend or server-side request functionality in website scope.
 - No login/session/authentication attack surface.
 - No form processing or file upload.
 - No browser `fetch`, XHR, WebSocket or third-party analytics/runtime JavaScript.
-- No secrets matched common API key, private key, GitHub token or cloud-key patterns in the reviewed current source.
-- CSP limits scripts/styles/connections to same-origin; objects and frames are denied; framing is also denied with `X-Frame-Options`.
+- No exposed credential/API-key/private-key pattern identified during source review.
+- CSP restricts scripts, styles and connections to same-origin and denies objects/frames.
+- Framing is independently denied with `X-Frame-Options: DENY`.
+- HSTS is enabled for the apex with one-year max age.
+- COOP, COEP and CORP provide a strict same-origin isolation baseline for the current all-first-party static resource model.
 - Referrer and Permissions Policy are explicitly restricted.
-- `Cross-Origin-Opener-Policy: same-origin` is present.
-- Contact uses `mailto:` only.
+- Public assets use explicit cache directives.
+- Contact uses `mailto:` only; there is no website-side message-processing endpoint.
 
 ## SCA / SBOM result
 
 **Runtime npm dependencies:** 0.  
-**Declared build dependency after remediation:** `wrangler@4.135.0` (build/deployment only; not shipped to visitors).  
-**SBOM:** `security/sbom.cdx.json` (CycloneDX 1.6).
+**Declared direct build dependency:** `wrangler@4.135.0` (build/deployment only; not shipped to visitors).  
+**Validated npm audit:** 0 vulnerabilities.  
+**Validated resolved build SBOM:** 38 components.  
+**Repository SBOM:** `security/sbom.cdx.json`.  
+**CI evidence:** a full resolved CycloneDX build SBOM plus `package-lock.json` is uploaded as a workflow artifact for each successful SCA run.
 
 ## OWASP Top 10 mapping
 
 | OWASP category | Status | Assessment |
 |---|---|---|
 | A01 Broken Access Control | N/A | Public static content; no authorization boundary. |
-| A02 Cryptographic Failures | Low exposure | No sensitive application data; edge TLS still requires live verification. |
-| A03 Injection | Pass / hardening note | No backend injection surface; no user-controlled DOM HTML flow identified. Trusted `innerHTML` sink retained as a hardening candidate. |
+| A02 Cryptographic Failures | Pass for assessed edge controls | No sensitive application data; production accepts TLS 1.2/1.3 and rejects TLS <=1.1. HSTS is active. |
+| A03 Injection | Pass / hardening note | No backend injection surface and no user-controlled DOM HTML flow identified. Trusted `innerHTML` remains an optional defense-in-depth hardening item. |
 | A04 Insecure Design | Pass | Minimal static architecture; no accounts, uploads, payments or stateful workflows. |
-| A05 Security Misconfiguration | Pass with live verification pending | Strong CSP/anti-frame/referrer/permissions headers in source; actual edge delivery must be verified live. |
-| A06 Vulnerable and Outdated Components | Pass after remediation | No runtime libraries. Wrangler pinned to 4.135.0; continuous SCA added. |
+| A05 Security Misconfiguration | Pass | Security response headers, redirect behavior, TLS policy and HTTP method behavior were verified live. |
+| A06 Vulnerable and Outdated Components | Pass | No runtime libraries; Wrangler is pinned; npm audit currently reports 0 vulnerabilities; Dependabot/SCA are continuous. |
 | A07 Identification and Authentication Failures | N/A | No authentication. |
-| A08 Software and Data Integrity Failures | Needs action | `main` has no required branch protection; CI security gates added but are not mandatory until ruleset protection is enabled. |
-| A09 Security Logging and Monitoring Failures | Contextual | Static site; Cloudflare access/security telemetry should be retained according to operational requirements. |
+| A08 Software and Data Integrity Failures | Needs action | Security CI exists, but `main` is not yet protected by an active repository ruleset. |
+| A09 Security Logging and Monitoring Failures | Contextual | Static site; GitHub Actions provides security-test evidence. Cloudflare access/security telemetry retention remains an operational decision. |
 | A10 SSRF | N/A | No server-side HTTP client/request functionality. |
 
-## Continuous security controls added
+## Continuous security controls
 
-- GitHub CodeQL for JavaScript/TypeScript on push, PR, weekly schedule and manual dispatch.
+- GitHub CodeQL `security-extended` analysis on push, pull request, weekly schedule and manual dispatch.
 - `npm audit --audit-level=high` for build dependencies.
+- Full CycloneDX dependency SBOM generation and evidence artifact upload.
 - Dependabot weekly npm update checks.
 - Exact Wrangler version pin.
+- Production OWASP ZAP baseline on push, weekly schedule and manual dispatch.
+- Production DAST gate fails on Low/Medium/High alert groups.
+- Production security-policy readiness check prevents ZAP from scanning a stale Cloudflare deployment after a GitHub push.
+- Automated verification of HTTPS redirects, HSTS, CSP, anti-framing, MIME-sniffing protection, Permissions Policy, COOP/CORP/COEP, TLS 1.2/1.3, legacy TLS rejection and TRACE rejection.
 - `.gitignore` entries for local dependency/runtime secret files.
 
-## DAST close-out checklist
+## Remaining action
 
-1. Confirm apex HTTPS returns `200` and expected security headers.
-2. Confirm `http://fornostsecurity.com` redirects to HTTPS.
-3. Confirm both HTTP/HTTPS `www` redirect permanently to the HTTPS apex while preserving path/query.
-4. Verify TLS 1.0/1.1 rejected and TLS 1.2/1.3 accepted.
-5. Verify `TRACE` is rejected; review `OPTIONS`, `HEAD`, unsupported verbs and error responses.
-6. Test malicious query/hash payloads for reflected/DOM XSS.
-7. Check content-type handling, cache behavior, CSP enforcement, clickjacking protection, MIME sniffing and information leakage.
-8. Verify `robots.txt`, `sitemap.xml`, favicon/logo/static assets and non-existent paths.
-9. Decide on HSTS only after all HTTPS/redirect behavior is confirmed; add preload only after deliberate review.
+Enable the `main` branch repository ruleset defined in `security/REPOSITORY-PROTECTION.md`. After that control is active and verified, SEC-001 can be closed and the website assessment will have no open material finding in the reviewed scope.
+
+HSTS `includeSubDomains` and `preload` are intentionally not enabled automatically. They should be considered only after every relevant subdomain is confirmed to be HTTPS-only and operationally ready for the irreversible/long-lived consequences of preload.
