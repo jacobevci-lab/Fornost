@@ -43,15 +43,20 @@ jobs:
           URL="https://fornostsecurity.com/"
           for attempt in $(seq 1 24); do
             HTML=$(curl --fail --silent --show-error --max-time 20 "$URL" || true)
-            if grep -Fq 'A future where security enables transformation instead of slowing it down.' <<<"$HTML" \
-              && grep -Fq 'Security that connects' <<<"$HTML"; then
-              echo "Current enterprise redesign is live on attempt $attempt."
+            HEADERS=$(curl --fail --silent --show-error --head --max-time 20 "$URL" || true)
+            CONTENT_OK=false
+            CSP_OK=false
+            grep -Fq 'A future where security enables transformation instead of slowing it down.' <<<"$HTML" \
+              && grep -Fq 'Security that connects' <<<"$HTML" && CONTENT_OK=true
+            grep -Eqi '^content-security-policy:.*script-src[^;]*https://static\.cloudflareinsights\.com' <<<"$HEADERS" && CSP_OK=true
+            if [[ "$CONTENT_OK" == true && "$CSP_OK" == true ]]; then
+              echo "Current enterprise build and CSP are live on attempt $attempt."
               exit 0
             fi
             echo "Waiting for Cloudflare production deployment ($attempt/24)..."
             sleep 10
           done
-          echo "Expected production content was not observed within the deployment window."
+          echo "Expected production content/CSP was not observed within the deployment window."
           exit 1
 
       - name: Run full production browser smoke QA
