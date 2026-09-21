@@ -1,90 +1,142 @@
-const translations={
-  en:{
-    "nav.services":"Services","nav.model":"Operating model","nav.company":"Company","nav.standards":"Standards","nav.contact":"Contact",
-    "hero.eyebrow":"ENTERPRISE CYBERSECURITY ADVISORY","hero.title":"Cybersecurity built for <em>complex enterprises.</em>","hero.lead":"Fornost connects business risk, security architecture, engineering and assurance so organizations can transform securely without creating another security silo.","hero.primary":"Discuss your priorities","hero.secondary":"Explore capabilities","hero.pillar1":"Strategy & Risk","hero.pillar2":"Architecture & Engineering","hero.pillar3":"Defense & Assurance",
-    "map.title":"ENTERPRISE SECURITY OPERATING MODEL","map.state":"Risk-aligned","map.business":"BUSINESS","map.technology":"TECHNOLOGY","map.assurance":"ASSURANCE","map.strategy":"Cyber Strategy & Governance","map.strategySub":"Risk appetite • operating model • roadmap","map.architecture":"Security Architecture","map.architectureSub":"Zero Trust • cloud • identity • network","map.secure":"Secure-by-Design","map.secureSub":"Applications • data • platforms • AI","map.defense":"Cyber Defense","map.defenseSub":"SOC • detection • threat • response","map.assure":"Continuous Assurance","map.assureSub":"Controls • evidence • testing • resilience","map.footer":"SECURITY BY DESIGN. ASSURANCE BY EVIDENCE.",
-    "trust.label":"Aligned to leading security, risk and regulatory frameworks",
-    "services.kicker":"CYBERSECURITY CAPABILITIES","services.title":"One security partner across the enterprise lifecycle.","services.intro":"Our service portfolio spans executive advisory, enterprise architecture, engineering, cyber defense and assurance. Engagements can be focused on one domain or coordinated as a multi-year transformation roadmap.","services.noteLabel":"ALSO INCLUDED","services.note":"Security awareness and human-risk programs, security tool selection and PoCs, control automation, security metrics/KPIs/KRIs, audit remediation and managed/co-managed operating-model design can be incorporated into any engagement.",
-    "group.strategy.title":"Strategy, Risk & Governance","group.strategy.body":"Translate business priorities and regulatory obligations into a defensible security program.","group.arch.title":"Architecture, Identity & Infrastructure","group.arch.body":"Design secure target states and control patterns across hybrid enterprise environments.","group.product.title":"Product, Application & Data Security","group.product.body":"Embed security in software, platforms and data flows before production risk is created.","group.defense.title":"Cyber Defense, Assurance & Resilience","group.defense.body":"Continuously validate exposure, detect threats and build the ability to withstand and recover from incidents.",
-    "svc.strategy.title":"Cyber Strategy & CISO Advisory","svc.strategy.body":"Security strategy, maturity assessment, operating model, investment roadmap, board reporting, risk appetite and virtual/fractional security leadership.","svc.strategy.l1":"Cybersecurity strategy & roadmap","svc.strategy.l2":"Security maturity & capability assessment","svc.strategy.l3":"Executive, board & CISO advisory",
-    "svc.grc.title":"Cyber Risk, GRC & Compliance","svc.grc.body":"Enterprise cyber risk models, BIA, control libraries, policies, regulatory mapping, audit readiness, evidence governance and remediation.","svc.grc.l3":"Risk, audit, findings & remediation",
-    "svc.privacy.title":"Privacy & Data Governance","svc.privacy.body":"Privacy-by-design, data classification, retention, data loss prevention and governance models that connect sensitive data to business and regulatory risk.","svc.privacy.l1":"Data classification & labeling","svc.privacy.l2":"DLP & information protection","svc.privacy.l3":"Privacy governance & control design",
-    "svc.tprm.title":"Third-Party & Supply Chain Risk","svc.tprm.body":"Vendor security governance, due diligence, risk tiering, contractual security requirements and continuous third-party assurance.","svc.tprm.l1":"Vendor security assessment","svc.tprm.l2":"Supply-chain control requirements","svc.tprm.l3":"TPRM lifecycle & monitoring",
-    "svc.arch.title":"Enterprise Security Architecture & Zero Trust","svc.arch.body":"Target-state architecture, security principles, reference architectures, segmentation models, trust boundaries and architecture governance.","svc.arch.l1":"Target-state & reference architecture","svc.arch.l2":"Zero Trust & segmentation","svc.arch.l3":"Architecture review & governance",
-    "svc.identity.title":"Identity, Access & Privileged Security","svc.identity.body":"IAM, PAM, identity governance, least privilege, Conditional Access and authentication architectures for workforce and privileged identities.","svc.identity.l2":"Conditional Access & MFA","svc.identity.l3":"Identity lifecycle & access governance",
-    "svc.network.title":"Network, Infrastructure & Endpoint Security","svc.network.body":"Network security architecture, micro-segmentation, secure connectivity, endpoint protection, hardening and enterprise security baselines.","svc.network.l1":"Network & segmentation architecture","svc.network.l2":"Endpoint, EDR/XDR & hardening","svc.network.l3":"Infrastructure security baselines",
-    "svc.cloud.title":"Cloud & Platform Security","svc.cloud.body":"Cloud security architecture, landing-zone controls, posture management, workload protection and secure Microsoft 365 / hybrid-cloud operating models.","svc.cloud.l3":"Cloud guardrails & posture governance",
-    "svc.appsec.title":"Secure-by-Design, AppSec & DevSecOps","svc.appsec.body":"Threat modeling, SSDLC, secure design review, SAST/DAST/SCA governance, API security and security gates integrated into delivery pipelines.","svc.appsec.l3":"CI/CD security & design review",
-    "svc.data.title":"Data Security & Information Protection","svc.data.body":"Data discovery, classification, encryption, DLP, information protection, insider-risk controls and secure data lifecycle architecture.","svc.data.l1":"Discovery, classification & labeling","svc.data.l2":"DLP, encryption & rights protection","svc.data.l3":"Insider risk & data access governance",
-    "svc.ot.title":"OT, ICS, IoT & Edge Security","svc.ot.body":"Security architecture and risk assessment for operational technology, industrial control environments, connected devices and edge systems.","svc.ot.l1":"OT/ICS security architecture","svc.ot.l2":"Asset visibility & segmentation","svc.ot.l3":"IoT/edge risk & control design",
-    "svc.ai.title":"AI & Emerging Technology Security","svc.ai.body":"Security governance for AI systems, emerging platforms and cryptographic change — including AI risk, model/data controls and quantum-readiness planning.","svc.ai.l1":"AI security & governance","svc.ai.l2":"Emerging-technology risk assessment","svc.ai.l3":"Cryptography & quantum-readiness roadmap",
-    "svc.soc.title":"SOC, SIEM, Detection Engineering & XDR","svc.soc.body":"SOC architecture, SIEM onboarding, correlation and detection use cases, automation, threat hunting and EDR/XDR operating-model improvement.","svc.soc.l2":"Detection engineering & threat hunting","svc.soc.l3":"SOC maturity & co-managed enablement",
-    "svc.vuln.title":"Vulnerability & Attack Surface Management","svc.vuln.body":"Risk-based vulnerability management, attack-surface discovery, remediation governance, credentialed scanning and continuous exposure reduction.","svc.vuln.l1":"Risk-based vulnerability management","svc.vuln.l3":"Remediation governance & metrics",
-    "svc.offensive.title":"Penetration Testing & Adversary Simulation","svc.offensive.body":"Independent technical assurance across applications, APIs, networks and cloud environments, including red-team and attack-simulation coordination.","svc.offensive.l1":"Web, API, network & cloud testing","svc.offensive.l2":"Red team & adversary simulation","svc.offensive.l3":"Pentest governance & remediation validation",
-    "svc.ir.title":"Incident Response, DFIR & Cyber Resilience","svc.ir.body":"Incident readiness, response playbooks, forensic coordination, ransomware preparedness, crisis exercises, BCP/DR security and recovery assurance.","svc.ir.l1":"Incident readiness & response planning","svc.ir.l2":"DFIR & ransomware preparedness","svc.ir.l3":"BCP/DR, tabletop & recovery assurance",
-    "model.kicker":"OUR OPERATING MODEL","model.heading":"Strategy to assurance, connected end to end.","model.body":"Cybersecurity programs fail when risk, architecture, engineering and audit run as separate systems. Our operating model keeps the business objective, technical control and evidence chain connected.","model.p1.title":"Business-led","model.p1.body":"Start with critical services, business impact and risk appetite.","model.p2.title":"Architecture-led","model.p2.body":"Turn risk into target states, patterns and guardrails.","model.p3.title":"Evidence-driven","model.p3.body":"Measure control operation, exposure and remediation continuously.","model.s1.title":"Discover & Prioritize","model.s1.body":"Business context • assets • threats • regulatory obligations • current-state evidence","model.s2.title":"Architect & Govern","model.s2.body":"Target state • security principles • control model • ownership • roadmap","model.s3.title":"Engineer & Integrate","model.s3.body":"Hardening • IAM • cloud • AppSec • network • data • security tooling","model.s4.title":"Detect & Respond","model.s4.body":"Telemetry • SIEM/XDR • detection • automation • response • recovery","model.s5.title":"Assure & Improve","model.s5.body":"Evidence • testing • audit • metrics • findings • continuous assurance",
-    "company.kicker":"COMPANY","company.title":"Security should enable the business — not sit beside it.","company.body":"Fornost Security is built around one principle: cybersecurity becomes valuable when strategy, architecture, engineering, operations and governance reinforce each other.","mission.label":"MISSION","mission.title":"Make enterprise security actionable.","mission.body":"Our mission is to turn cyber risk into practical architecture, controls and operating models that teams can implement, measure and improve.","vision.label":"VISION","vision.title":"A future where security is part of how organizations build and operate.","vision.body":"We envision organizations that can innovate faster because security, resilience and assurance are designed into every layer of the enterprise.","values.v1.title":"Secure-by-Design","values.v1.body":"Build security into architecture and delivery rather than adding controls after the fact.","values.v2.title":"Risk-Based","values.v2.body":"Prioritize what materially reduces business exposure and strengthens critical services.","values.v3.title":"Vendor-Neutral","values.v3.body":"Select technologies against capability, integration, operating fit and measurable outcomes.","values.v4.title":"Evidence-Driven","values.v4.body":"Use evidence, telemetry and control effectiveness to guide decisions and assurance.",
-    "engage.kicker":"ENGAGEMENT MODELS","engage.title":"Focused assessments or long-term transformation.","engage.body":"Engagements are shaped around the outcome you need — from independent review to architecture ownership, implementation support and ongoing advisory.","engage.e1.title":"Advisory & Assessment","engage.e1.body":"Independent review, maturity assessment, risk analysis and prioritized recommendations.","engage.e2.title":"Architecture & Transformation","engage.e2.body":"Target-state design, security roadmap, control architecture and transformation governance.","engage.e3.title":"Engineering & Enablement","engage.e3.body":"Implementation support, hardening, integration, use cases, policies and operating procedures.","engage.e4.title":"Continuous Advisory & Assurance","engage.e4.body":"Ongoing CISO/architecture support, control validation, metrics, audit readiness and improvement.",
-    "contact.kicker":"START A CONVERSATION","contact.title":"Bring the security challenge. We’ll structure the path forward.","contact.body":"For architecture reviews, GRC transformation, cloud and identity security, secure-by-design, cyber defense, resilience or a broader cybersecurity roadmap, contact Fornost Security.","contact.email":"EMAIL","footer.tagline":"Enterprise cybersecurity advisory & architecture.","footer.rights":"All rights reserved.","footer.top":"Back to top ↑"
-  },
-  tr:{
-    "nav.services":"Hizmetler","nav.model":"Çalışma modeli","nav.company":"Şirket","nav.standards":"Standartlar","nav.contact":"İletişim",
-    "hero.eyebrow":"KURUMSAL SİBER GÜVENLİK DANIŞMANLIĞI","hero.title":"Karmaşık kurumlar için <em>tasarlanmış siber güvenlik.</em>","hero.lead":"Fornost; iş riskini, güvenlik mimarisini, mühendisliği ve güvenceyi birbirine bağlayarak kurumların yeni güvenlik siloları oluşturmadan güvenli biçimde dönüşmesini sağlar.","hero.primary":"Önceliklerinizi konuşalım","hero.secondary":"Yetkinlikleri inceleyin","hero.pillar1":"Strateji & Risk","hero.pillar2":"Mimari & Mühendislik","hero.pillar3":"Savunma & Güvence",
-    "map.title":"KURUMSAL GÜVENLİK ÇALIŞMA MODELİ","map.state":"Risk odaklı","map.business":"İŞ","map.technology":"TEKNOLOJİ","map.assurance":"GÜVENCE","map.strategy":"Siber Strateji & Yönetişim","map.strategySub":"Risk iştahı • çalışma modeli • yol haritası","map.architecture":"Güvenlik Mimarisi","map.architectureSub":"Zero Trust • bulut • kimlik • ağ","map.secure":"Secure-by-Design","map.secureSub":"Uygulama • veri • platform • AI","map.defense":"Siber Savunma","map.defenseSub":"SOC • tespit • tehdit • müdahale","map.assure":"Sürekli Güvence","map.assureSub":"Kontroller • kanıt • test • dayanıklılık","map.footer":"TASARIMLA GÜVENLİK. KANITLA GÜVENCE.",
-    "trust.label":"Önde gelen güvenlik, risk ve düzenleyici çerçevelerle uyumlu",
-    "services.kicker":"SİBER GÜVENLİK YETKİNLİKLERİ","services.title":"Kurumsal yaşam döngüsünün tamamında tek güvenlik partneri.","services.intro":"Hizmet portföyümüz; yönetici danışmanlığı, kurumsal mimari, mühendislik, siber savunma ve güvenceyi kapsar. Çalışmalar tek bir alana odaklanabilir veya çok yıllı dönüşüm yol haritası olarak koordine edilebilir.","services.noteLabel":"AYRICA","services.note":"Güvenlik farkındalığı ve insan riski programları, güvenlik ürünü seçimi ve PoC'ler, kontrol otomasyonu, güvenlik KPI/KRI metrikleri, denetim aksiyonları ve managed/co-managed çalışma modeli tasarımı her çalışmaya entegre edilebilir.",
-    "group.strategy.title":"Strateji, Risk & Yönetişim","group.strategy.body":"İş önceliklerini ve düzenleyici yükümlülükleri savunulabilir bir güvenlik programına dönüştürün.","group.arch.title":"Mimari, Kimlik & Altyapı","group.arch.body":"Hibrit kurumsal ortamlarda güvenli hedef mimari ve kontrol desenleri tasarlayın.","group.product.title":"Ürün, Uygulama & Veri Güvenliği","group.product.body":"Güvenliği yazılım, platform ve veri akışlarına üretim riski oluşmadan yerleştirin.","group.defense.title":"Siber Savunma, Güvence & Dayanıklılık","group.defense.body":"Maruziyeti sürekli doğrulayın, tehditleri tespit edin ve olaylara dayanma ve toparlanma kabiliyeti oluşturun.",
-    "svc.strategy.title":"Siber Strateji & CISO Danışmanlığı","svc.strategy.body":"Güvenlik stratejisi, olgunluk değerlendirmesi, çalışma modeli, yatırım yol haritası, yönetim kurulu raporlaması, risk iştahı ve sanal/fractional güvenlik liderliği.","svc.strategy.l1":"Siber güvenlik stratejisi & yol haritası","svc.strategy.l2":"Güvenlik olgunluk & yetkinlik değerlendirmesi","svc.strategy.l3":"Yönetici, yönetim kurulu & CISO danışmanlığı",
-    "svc.grc.title":"Siber Risk, GRC & Uyum","svc.grc.body":"Kurumsal siber risk modelleri, BIA, kontrol kütüphaneleri, politikalar, mevzuat eşleştirmesi, denetim hazırlığı, kanıt yönetişimi ve aksiyon yönetimi.","svc.grc.l3":"Risk, denetim, bulgu & aksiyon yönetimi",
-    "svc.privacy.title":"Gizlilik & Veri Yönetişimi","svc.privacy.body":"Privacy-by-design, veri sınıflandırma, saklama, veri kaybı önleme ve hassas veriyi iş ve mevzuat riskiyle ilişkilendiren yönetişim modelleri.","svc.privacy.l1":"Veri sınıflandırma & etiketleme","svc.privacy.l2":"DLP & bilgi koruma","svc.privacy.l3":"Gizlilik yönetişimi & kontrol tasarımı",
-    "svc.tprm.title":"Üçüncü Taraf & Tedarik Zinciri Riski","svc.tprm.body":"Tedarikçi güvenlik yönetişimi, durum tespiti, risk sınıflandırması, sözleşmesel güvenlik gereksinimleri ve sürekli üçüncü taraf güvencesi.","svc.tprm.l1":"Tedarikçi güvenlik değerlendirmesi","svc.tprm.l2":"Tedarik zinciri kontrol gereksinimleri","svc.tprm.l3":"TPRM yaşam döngüsü & izleme",
-    "svc.arch.title":"Kurumsal Güvenlik Mimarisi & Zero Trust","svc.arch.body":"Hedef durum mimarisi, güvenlik prensipleri, referans mimariler, segmentasyon modelleri, trust boundary tasarımı ve mimari yönetişim.","svc.arch.l1":"Hedef durum & referans mimari","svc.arch.l2":"Zero Trust & segmentasyon","svc.arch.l3":"Mimari değerlendirme & yönetişim",
-    "svc.identity.title":"Kimlik, Erişim & Ayrıcalıklı Hesap Güvenliği","svc.identity.body":"IAM, PAM, kimlik yönetişimi, least privilege, Conditional Access ve kullanıcı/ayrıcalıklı kimlikler için kimlik doğrulama mimarileri.","svc.identity.l2":"Conditional Access & MFA","svc.identity.l3":"Kimlik yaşam döngüsü & erişim yönetişimi",
-    "svc.network.title":"Ağ, Altyapı & Uç Nokta Güvenliği","svc.network.body":"Ağ güvenlik mimarisi, mikro-segmentasyon, güvenli bağlantı, uç nokta koruma, hardening ve kurumsal güvenlik baseline'ları.","svc.network.l1":"Ağ & segmentasyon mimarisi","svc.network.l2":"Uç nokta, EDR/XDR & hardening","svc.network.l3":"Altyapı güvenlik baseline'ları",
-    "svc.cloud.title":"Bulut & Platform Güvenliği","svc.cloud.body":"Bulut güvenlik mimarisi, landing-zone kontrolleri, posture yönetimi, workload koruması ve güvenli Microsoft 365 / hibrit bulut çalışma modelleri.","svc.cloud.l3":"Bulut guardrail'leri & posture yönetişimi",
-    "svc.appsec.title":"Secure-by-Design, AppSec & DevSecOps","svc.appsec.body":"Threat modeling, SSDLC, güvenli tasarım incelemesi, SAST/DAST/SCA yönetişimi, API güvenliği ve teslimat pipeline'larına entegre güvenlik kapıları.","svc.appsec.l3":"CI/CD güvenliği & tasarım incelemesi",
-    "svc.data.title":"Veri Güvenliği & Bilgi Koruma","svc.data.body":"Veri keşfi, sınıflandırma, şifreleme, DLP, bilgi koruma, insider-risk kontrolleri ve güvenli veri yaşam döngüsü mimarisi.","svc.data.l1":"Keşif, sınıflandırma & etiketleme","svc.data.l2":"DLP, şifreleme & hak yönetimi","svc.data.l3":"İç tehdit & veri erişim yönetişimi",
-    "svc.ot.title":"OT, ICS, IoT & Edge Güvenliği","svc.ot.body":"Operasyonel teknoloji, endüstriyel kontrol ortamları, bağlı cihazlar ve edge sistemleri için güvenlik mimarisi ve risk değerlendirmesi.","svc.ot.l1":"OT/ICS güvenlik mimarisi","svc.ot.l2":"Varlık görünürlüğü & segmentasyon","svc.ot.l3":"IoT/edge risk & kontrol tasarımı",
-    "svc.ai.title":"AI & Yeni Teknoloji Güvenliği","svc.ai.body":"AI sistemleri, yeni platformlar ve kriptografik dönüşüm için güvenlik yönetişimi; AI riski, model/veri kontrolleri ve quantum-readiness planlaması dahil.","svc.ai.l1":"AI güvenliği & yönetişimi","svc.ai.l2":"Yeni teknoloji risk değerlendirmesi","svc.ai.l3":"Kriptografi & quantum-readiness yol haritası",
-    "svc.soc.title":"SOC, SIEM, Detection Engineering & XDR","svc.soc.body":"SOC mimarisi, SIEM onboarding, korelasyon ve detection use-case'leri, otomasyon, threat hunting ve EDR/XDR çalışma modeli iyileştirmesi.","svc.soc.l2":"Detection engineering & threat hunting","svc.soc.l3":"SOC olgunluğu & co-managed enablement",
-    "svc.vuln.title":"Zafiyet & Saldırı Yüzeyi Yönetimi","svc.vuln.body":"Risk bazlı zafiyet yönetimi, saldırı yüzeyi keşfi, aksiyon yönetişimi, credentialed scanning ve sürekli maruziyet azaltma.","svc.vuln.l1":"Risk bazlı zafiyet yönetimi","svc.vuln.l3":"Aksiyon yönetişimi & metrikler",
-    "svc.offensive.title":"Pentest & Adversary Simulation","svc.offensive.body":"Uygulama, API, ağ ve bulut ortamlarında bağımsız teknik güvence; red-team ve attack-simulation koordinasyonu dahil.","svc.offensive.l1":"Web, API, ağ & bulut testleri","svc.offensive.l2":"Red team & adversary simulation","svc.offensive.l3":"Pentest yönetişimi & düzeltme doğrulaması",
-    "svc.ir.title":"Olay Müdahale, DFIR & Siber Dayanıklılık","svc.ir.body":"Olay hazırlığı, müdahale playbook'ları, adli bilişim koordinasyonu, ransomware hazırlığı, kriz tatbikatları, BCP/DR güvenliği ve kurtarma güvencesi.","svc.ir.l1":"Olay hazırlığı & müdahale planlama","svc.ir.l2":"DFIR & ransomware hazırlığı","svc.ir.l3":"BCP/DR, tabletop & kurtarma güvencesi",
-    "model.kicker":"ÇALIŞMA MODELİMİZ","model.heading":"Stratejiden güvenceye uçtan uca bağlantılı.","model.body":"Siber güvenlik programları; risk, mimari, mühendislik ve denetim ayrı sistemler gibi çalıştığında zayıflar. Çalışma modelimiz iş hedefi, teknik kontrol ve kanıt zincirini bağlantılı tutar.","model.p1.title":"İş odaklı","model.p1.body":"Kritik hizmetler, iş etkisi ve risk iştahıyla başlayın.","model.p2.title":"Mimari odaklı","model.p2.body":"Riski hedef mimariye, pattern'lara ve guardrail'lere dönüştürün.","model.p3.title":"Kanıt odaklı","model.p3.body":"Kontrol işleyişini, maruziyeti ve aksiyonları sürekli ölçün.","model.s1.title":"Keşfet & Önceliklendir","model.s1.body":"İş bağlamı • varlıklar • tehditler • mevzuat • mevcut durum kanıtı","model.s2.title":"Tasarla & Yönetişim Kur","model.s2.body":"Hedef durum • güvenlik prensipleri • kontrol modeli • sahiplik • yol haritası","model.s3.title":"Uygula & Entegre Et","model.s3.body":"Hardening • IAM • bulut • AppSec • ağ • veri • güvenlik araçları","model.s4.title":"Tespit Et & Müdahale Et","model.s4.body":"Telemetri • SIEM/XDR • tespit • otomasyon • müdahale • kurtarma","model.s5.title":"Doğrula & İyileştir","model.s5.body":"Kanıt • test • denetim • metrik • bulgular • sürekli güvence",
-    "company.kicker":"ŞİRKET","company.title":"Güvenlik işi mümkün kılmalı — işin yanında ayrı bir katman olmamalı.","company.body":"Fornost Security tek bir prensip üzerine kuruludur: strateji, mimari, mühendislik, operasyon ve yönetişim birbirini güçlendirdiğinde siber güvenlik gerçek değer üretir.","mission.label":"MİSYON","mission.title":"Kurumsal güvenliği uygulanabilir hale getirmek.","mission.body":"Misyonumuz siber riski ekiplerin uygulayabileceği, ölçebileceği ve geliştirebileceği pratik mimariye, kontrollere ve çalışma modellerine dönüştürmektir.","vision.label":"VİZYON","vision.title":"Güvenliğin kurumların nasıl geliştirdiği ve çalıştığının doğal parçası olduğu bir gelecek.","vision.body":"Güvenlik, dayanıklılık ve güvence her kurumsal katmana tasarımdan itibaren yerleştiği için kurumların daha hızlı inovasyon yapabildiği bir gelecek hedefliyoruz.","values.v1.title":"Secure-by-Design","values.v1.body":"Kontrolleri sonradan eklemek yerine güvenliği mimari ve teslimat sürecine yerleştirin.","values.v2.title":"Risk Odaklı","values.v2.body":"İş maruziyetini gerçekten azaltan ve kritik hizmetleri güçlendiren alanları önceliklendirin.","values.v3.title":"Vendor Bağımsız","values.v3.body":"Teknolojileri yetkinlik, entegrasyon, operasyonel uygunluk ve ölçülebilir sonuçlarla değerlendirin.","values.v4.title":"Kanıt Odaklı","values.v4.body":"Kararları ve güvenceyi kanıt, telemetri ve kontrol etkinliğiyle destekleyin.",
-    "engage.kicker":"ÇALIŞMA MODELLERİ","engage.title":"Odaklı değerlendirmeler veya uzun vadeli dönüşüm.","engage.body":"Çalışmalar ihtiyacınız olan sonuca göre şekillenir; bağımsız değerlendirmeden mimari sahipliğe, uygulama desteğine ve sürekli danışmanlığa kadar.","engage.e1.title":"Danışmanlık & Değerlendirme","engage.e1.body":"Bağımsız inceleme, olgunluk değerlendirmesi, risk analizi ve önceliklendirilmiş öneriler.","engage.e2.title":"Mimari & Dönüşüm","engage.e2.body":"Hedef durum tasarımı, güvenlik yol haritası, kontrol mimarisi ve dönüşüm yönetişimi.","engage.e3.title":"Mühendislik & Enablement","engage.e3.body":"Uygulama desteği, hardening, entegrasyon, use-case'ler, politika ve operasyon prosedürleri.","engage.e4.title":"Sürekli Danışmanlık & Güvence","engage.e4.body":"Sürekli CISO/mimari desteği, kontrol doğrulama, metrik, denetim hazırlığı ve iyileştirme.",
-    "contact.kicker":"İLETİŞİME GEÇİN","contact.title":"Güvenlik problemini getirin. İleriye giden yolu birlikte yapılandıralım.","contact.body":"Mimari değerlendirme, GRC dönüşümü, bulut ve kimlik güvenliği, secure-by-design, siber savunma, dayanıklılık veya daha geniş bir siber güvenlik yol haritası için Fornost Security ile iletişime geçin.","contact.email":"E-POSTA","footer.tagline":"Kurumsal siber güvenlik danışmanlığı & mimari.","footer.rights":"Tüm hakları saklıdır.","footer.top":"Başa dön ↑"
+(() => {
+  'use strict';
+
+  const root = document.documentElement;
+  const header = document.getElementById('siteHeader');
+  const nav = document.getElementById('siteNav');
+  const menuToggle = document.getElementById('menuToggle');
+  const backToTop = document.getElementById('backToTop');
+  const scrollProgress = document.getElementById('scrollProgress');
+  const year = document.getElementById('currentYear');
+  const metaDescription = document.getElementById('metaDescription');
+  const languageButtons = Array.from(document.querySelectorAll('[data-set-lang]'));
+  const translatable = Array.from(document.querySelectorAll('[data-i18n]'));
+
+  const metaByLanguage = {
+    en: 'Fornost Security provides enterprise cybersecurity advisory across strategy, architecture, risk, GRC, cloud, identity, application security, cyber defense and resilience.',
+    tr: 'Fornost Security; strateji, mimari, risk, GRC, bulut, kimlik, uygulama güvenliği, siber savunma ve dayanıklılık alanlarında kurumsal siber güvenlik danışmanlığı sunar.'
+  };
+
+  const titleByLanguage = {
+    en: 'Fornost Security | Enterprise Cybersecurity Advisory',
+    tr: 'Fornost Security | Kurumsal Siber Güvenlik Danışmanlığı'
+  };
+
+  const validLanguage = (value) => value === 'tr' ? 'tr' : 'en';
+
+  function setLanguage(language, persist = true) {
+    const lang = validLanguage(language);
+    root.lang = lang;
+
+    translatable.forEach((element) => {
+      const value = lang === 'tr' ? element.dataset.tr : element.dataset.en;
+      if (typeof value === 'string') {
+        element.textContent = value;
+      }
+    });
+
+    languageButtons.forEach((button) => {
+      const active = button.dataset.setLang === lang;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+
+    if (metaDescription) {
+      metaDescription.setAttribute('content', metaByLanguage[lang]);
+    }
+    document.title = titleByLanguage[lang];
+
+    if (menuToggle) {
+      menuToggle.setAttribute('aria-label', lang === 'tr' ? 'Menüyü aç' : 'Open navigation');
+    }
+
+    if (persist) {
+      try {
+        localStorage.setItem('fornost-language', lang);
+      } catch (_) {
+        // Preference persistence is optional.
+      }
+    }
   }
-};
 
-const metaByLang={
-  en:{title:"Fornost Security | Enterprise Cybersecurity Advisory",description:"Fornost Security provides enterprise cybersecurity advisory across strategy, architecture, risk, GRC, cloud, identity, application security, cyber defense and resilience."},
-  tr:{title:"Fornost Security | Kurumsal Siber Güvenlik Danışmanlığı",description:"Fornost Security; siber strateji, kurumsal güvenlik mimarisi, risk ve GRC, bulut, kimlik, uygulama güvenliği, siber savunma ve dayanıklılık danışmanlığı sunar."}
-};
+  function getInitialLanguage() {
+    try {
+      const saved = localStorage.getItem('fornost-language');
+      if (saved === 'tr' || saved === 'en') return saved;
+    } catch (_) {
+      // Fall through to browser preference.
+    }
+    return navigator.language && navigator.language.toLowerCase().startsWith('tr') ? 'tr' : 'en';
+  }
 
-function setLanguage(lang,{persist=true}={}){
-  if(!translations[lang]) lang="en";
-  document.documentElement.lang=lang;
-  document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;if(translations[lang][key]!==undefined) el.textContent=translations[lang][key];});
-  document.querySelectorAll("[data-i18n-html]").forEach(el=>{const key=el.dataset.i18nHtml;if(translations[lang][key]!==undefined) el.innerHTML=translations[lang][key];});
-  document.querySelectorAll("[data-set-lang]").forEach(btn=>{const active=btn.dataset.setLang===lang;btn.classList.toggle("active",active);btn.setAttribute("aria-pressed",String(active));});
-  document.title=metaByLang[lang].title;
-  const desc=document.getElementById("metaDescription"); if(desc) desc.content=metaByLang[lang].description;
-  const url=new URL(window.location.href); if(lang==="tr") url.searchParams.set("lang","tr"); else url.searchParams.delete("lang"); history.replaceState({},"",url.pathname+url.search+url.hash);
-  if(persist) localStorage.setItem("fornost-lang",lang);
-}
+  languageButtons.forEach((button) => {
+    button.addEventListener('click', () => setLanguage(button.dataset.setLang));
+  });
 
-document.querySelectorAll("[data-set-lang]").forEach(btn=>btn.addEventListener("click",()=>setLanguage(btn.dataset.setLang)));
-const params=new URLSearchParams(location.search); setLanguage(params.get("lang")||localStorage.getItem("fornost-lang")||"en",{persist:false});
+  function closeMenu() {
+    if (!nav || !menuToggle) return;
+    nav.classList.remove('open');
+    menuToggle.classList.remove('active');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  }
 
-const menuToggle=document.getElementById("menuToggle"),siteNav=document.getElementById("siteNav");
-menuToggle.addEventListener("click",()=>{const open=siteNav.classList.toggle("open");menuToggle.setAttribute("aria-expanded",String(open));});
-siteNav.querySelectorAll("a").forEach(link=>link.addEventListener("click",()=>{siteNav.classList.remove("open");menuToggle.setAttribute("aria-expanded","false");}));
-window.addEventListener("resize",()=>{if(window.innerWidth>760){siteNav.classList.remove("open");menuToggle.setAttribute("aria-expanded","false");}});
+  if (menuToggle && nav) {
+    menuToggle.addEventListener('click', () => {
+      const opening = !nav.classList.contains('open');
+      nav.classList.toggle('open', opening);
+      menuToggle.classList.toggle('active', opening);
+      menuToggle.setAttribute('aria-expanded', String(opening));
+      document.body.classList.toggle('menu-open', opening);
+    });
 
-document.getElementById("year").textContent=new Date().getFullYear();
+    nav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
 
-function backToTop(){window.scrollTo({top:0,left:0,behavior:"smooth"});history.replaceState({},"",location.pathname+location.search);}
-const backButton=document.getElementById("backToTop"),floatingTop=document.getElementById("floatingTop");
-backButton.addEventListener("click",backToTop); floatingTop.addEventListener("click",backToTop);
-window.addEventListener("scroll",()=>floatingTop.classList.toggle("visible",window.scrollY>650),{passive:true});
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 980) closeMenu();
+    });
+  }
+
+  function updateScrollState() {
+    const top = window.scrollY || document.documentElement.scrollTop;
+    if (header) header.classList.toggle('scrolled', top > 12);
+
+    if (scrollProgress) {
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const percent = Math.min(100, Math.max(0, (top / max) * 100));
+      scrollProgress.style.width = `${percent}%`;
+    }
+  }
+
+  window.addEventListener('scroll', updateScrollState, { passive: true });
+  updateScrollState();
+
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  const revealItems = Array.from(document.querySelectorAll('.reveal'));
+  const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    revealItems.forEach((item) => item.classList.add('revealed'));
+  } else {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+    revealItems.forEach((item) => observer.observe(item));
+  }
+
+  if (year) year.textContent = String(new Date().getFullYear());
+  setLanguage(getInitialLanguage(), false);
+})();
