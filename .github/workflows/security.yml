@@ -60,8 +60,8 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: "22"
-      - name: Resolve dependency graph without lifecycle scripts
-        run: npm install --package-lock-only --ignore-scripts
+      - name: Install dependency graph without lifecycle scripts
+        run: npm install --ignore-scripts
       - name: Audit build dependencies
         run: npm audit --audit-level=high
       - name: Generate full CycloneDX build-dependency SBOM
